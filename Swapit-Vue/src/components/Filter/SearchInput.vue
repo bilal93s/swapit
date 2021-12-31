@@ -1,0 +1,42 @@
+<template>
+  <div id="SearchInput">
+    <input v-model="searchQuery">
+    <div v-show ="searchQuery" v-for="game in resultQuery" :key="game.id">{{game.title}}</div>
+  </div>
+</template>
+
+<script>
+
+  export default {
+    name: "SearchInput",
+    data: () => ({
+      searchQuery: null,
+      resources: [
+        { id: 1, title: "javascript for dummies" },
+        { id: 2, title: "vue for dummies" },
+        { id: 3, title: "dos for dummies" },
+        { id: 4, title: "windows for dummies" },
+        { id: 5, title: "html for dummies" }
+      ],
+      list: [],
+      filter: false,
+    }),
+    computed: { 
+      resultQuery() {
+        if (this.searchQuery) {
+          return this.resources.filter(item => {
+            return this.searchQuery
+              .toLowerCase()
+              .split(" ")
+              .every(v => item.title.toLowerCase().includes(v));
+          });
+        } else {
+          return this.resources;
+        }
+      }
+    },   
+  };
+</script>
+
+<style scoped>
+</style>
