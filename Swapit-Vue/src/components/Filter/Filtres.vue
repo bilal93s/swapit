@@ -1,8 +1,7 @@
 <template>
   <div id="Filtres" class="menu-items">
     <ul v-for="(filter,title) in filters" :key="title">
-      <span>{{title}}</span>
-      <Filtre title=k :filtre_data=filtres_data></Filtre>
+      <Filtre :title="title" :filtre_data="filter"></Filtre>
     </ul>
   </div>
 </template>

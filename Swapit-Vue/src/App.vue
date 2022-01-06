@@ -26,13 +26,17 @@
     <Form />
     <TPDirective /> -->
     <div class="dashboard">
-        <!-- <SideBar/>
-        <div class="content">
+         <SideBar/>
+        <!-- <div class="content">
             <router-view/>
         </div> -->
         
     </div>
+    <Toggle>
     <Login/>
+    </Toggle>
+    <Register/>
+    <GameSearchInput/>
   </div>
 </template>
 
@@ -44,8 +48,12 @@
 // import List from "./components/List.vue";
 // import Form from "./components/Form.vue";
 // import TPDirective from "./components/TPDirective.vue";
-// import SideBar from "./components/Filter/SideBar.vue";
+import SideBar from "./components/Filter/SideBar.vue";
 import Login from "./components/Form/Signin.vue";
+import Register from "./components/Form/Signup.vue";
+import Toggle from "./components/Toggle/Toggle.vue";
+import GameSearchInput from "./components/Card/Game_Search_Input.vue"
+
 
 export default {
   name: "App",
@@ -57,8 +65,11 @@ export default {
     // List,
     // Form,
     // TPDirective,
-    // SideBar,
+    SideBar,
     Login,
+    Register,
+    Toggle,
+    GameSearchInput
   },
   methods: {
     handleClick: function () {

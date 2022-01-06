@@ -9,10 +9,13 @@
     <Field name="remenberme" type="checkbox"/>
     <label v-if="with_label"><span>remenberme</span></label>
     <Button :onClick='handleSubmit' type="submit" title="Connexion"> </Button>
+    
   </Formik>
+  
 </template>
 
 <script>
+
   import Button from "../Buttons/Button.vue";
   import { SigninSchema as validator } from "../../lib/Validators/Signin_validator.js";
   import Formik from "../../lib/Formik.vue";
@@ -21,7 +24,7 @@
     components: {
       Formik,
       Field,
-      Button
+      Button,
     },
     computed:{
       validator:()=>validator,

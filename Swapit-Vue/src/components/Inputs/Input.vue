@@ -1,5 +1,5 @@
 <template>
-    <input :name="name" class="form__input" v-bind:class="variant" :id="name" required :placeholder="placeholder" autocomplete="off" />
+    <input :name="name" class="form__input" :value="value" v-bind:class="variant" :id="name" required :placeholder="placeholder" autocomplete="off"/>
 </template>
 
 <script>
@@ -19,7 +19,18 @@ export default {
       type: String,
       default:'',
     },
+    value:{
+      type: String,
+      default:'',
+    },
   },
+  methods: {
+      handleChange: function (event) {
+        this.$emit('input', event.target.value);
+        console.info(event)
+
+      },
+    },
 };
 </script>
 

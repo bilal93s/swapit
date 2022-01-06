@@ -1,9 +1,9 @@
 <template>
   <div id="Filtre" class="menu-items">
     <slot>
-      <h1>Unamed</h1>
+      <h1>{{title}}</h1>
     </slot>
-      <li v-for="(value,k) in filter" :key="k" active-class="active" tag="button" exact class="side-btn">
+      <li v-for="(value,k) in filtre_data" :key="k" active-class="active" tag="button" exact class="side-btn">
         <div class="link-container">
           <input type="checkbox" id="scales" name="scales" checked>
           <label for="scales" class ="filter_value">{{value}}</label>

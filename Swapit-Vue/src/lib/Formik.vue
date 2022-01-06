@@ -1,12 +1,20 @@
 <template>
     <div @submit.prevent="handleSubmit" @keydown.enter.prevent="handleSubmit" class="form">
-      <slot v-bind="{handleSubmit, errors, with_label}" :values="values" @onChange.prevent="updateValues" ></slot>
+      <slot v-bind="{handleSubmit, errors, with_label}" :values="values"></slot>
+    <PulseLoader :loading="isLoading" v-if="isLoading">
+      
+    </PulseLoader>
     </div>
 </template>
 
 <script>
+
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   name: "Formik",
+  components: {
+     PulseLoader
+    },
   props: {
     initialValues: {Object, default: () => ({})},
     onSubmit: {
@@ -26,39 +34,34 @@ export default {
     return {
       values: this.$props.initialValues,
       errors:[],
+      isLoading: false,
       }
   },
   provide() {
     return {
       values: this.$data.values ?? [],
-      // updateValues: updateValues,
     }
   },
   methods: {
-    updateValues: function (values) {
-        this.$data.values = values
-    },
     handleSubmit: function () {
+      this.$data.isLoading = true;
       const data = this.$data.values;
-      console.log(this.$data.values);
       this.$props.validator
         .validate(data, {abortEarly: false})
         .then(() => {
           this.$data.errors = {};
           this.$props.onSubmit(data); 
+        }).then(() => {
+            // this.$data.isLoading = false;
         })
         .catch(err => {
           this.$data.errors = {};
           if(err.inner){
             err.inner.forEach(error => {
               this.$data.errors[error.path] = error.message;
-              console.info(error.message);
-                            console.info(error.path);
-                            console.info(this.$data.errors)
-
-            
             });
           }
+          // this.$data.isLoading = false;
         });
       },
   },
@@ -69,10 +72,15 @@ export default {
 
 .form {
   width: 50%;
-  margin: 0 auto;
+  margin: auto auto;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
+}
+
+.form > input:focus {
+outline: none;
 }
 </style>
