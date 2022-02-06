@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar">
-        <div class="title">
-            Simple Sidebar
-        </div>
-          <SearchFilter/>
+        <b-button v-b-toggle.sidebar-1>Recherche avancée</b-button>    
+            <b-sidebar id="sidebar-1" title="Sidebar" shadow>
+                <SearchFilter/>
+            </b-sidebar>
     </div>
 </template>
 
@@ -38,9 +38,7 @@ import SearchFilter from "./SearchFilter.vue";
 </script>
 
 <style scoped>
-.title {
-    color: white;
-    font-size: 24px;
+.sidebar {
     margin-top: 10px;
 }
 </style>
