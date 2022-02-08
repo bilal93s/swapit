@@ -1,20 +1,29 @@
 <template>
-  <div id="Game_Search_Input">
+  <div id="Game_Search" class="gameSearch">
     <input v-model="searchQuery">
     <GameCardListAdd v-show="searchQuery" :games="resultQuery"/>
     <GameCardListOwn v-show="my_games" :games="my_games"/>
+    <Button title="Confirmer" :onClick="HandleSubmit" />
   </div>
 </template>
 
 <script>
   import GameCardListAdd from './Game_Card_List_Add.vue';
-  import GameCardListOwn from './Game_Card_List_Own.vue';
+  import GameCardListOwn from './Game_Card_List.vue';
+  import Button from '../Buttons/Button.vue';
 
   export default {
       name: "Game_Search_Input",
       components: {
       GameCardListAdd,
-      GameCardListOwn
+      GameCardListOwn,
+      Button,
+      },
+      props: {
+         onSubmit: {
+          type: Function,
+          require: true,
+        },
       },
       data: () => ({
         searchQuery: null,
@@ -41,32 +50,27 @@
             return this.resources;
           }
         },
-        // addedGames() {
-        //   return this.games.map(game => {if(this.added(game_id)){
-        //     return game
-        //   }});
-        // }
       },
       methods:{
         add: function(game) {
           if (!this.added(game)) {
             this.$data.my_games.push(game)
-            console.info(this.$data.my_games)
           }
         },
         supp: function(game) {
           if (this.added(game.id)) {
             this.$data.my_games = this.$data.my_games.filter(e => e.id !== game.id)
-            console.info(this.$data.my_games)
           }
         },
         added: function(game_id) {
-          console.info(this.$data.my_games)
           return (this.$data.my_games.map(game => {
             return game.id
           })).includes(game_id)
-        
-        }
+        },
+        HandleSubmit: function() {
+          // this.$emit('submit', this.my_games)
+          console.info(this.$data.my_games)
+        },
       },
       provide() {
         return {
@@ -80,4 +84,14 @@
 </script>
 
 <style scoped>
+.gameSearch{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  padding: 2rem;
+}
 </style>

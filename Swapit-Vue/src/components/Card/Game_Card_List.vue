@@ -32,29 +32,29 @@ export default {
     }
   },
   methods: {
-    sortMode: function(s) {
-        if(s === this.sortBy) {
-            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        }
-      this.sortBy = s;
-    }
+    // sortMode: function(s) {
+    //     if(s === this.sortBy) {
+    //         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    //     }
+    //   this.sortBy = s;
+    // }
   },
-  watch: {
-    sortedGames() {
-      console.info(this.$data.games)
-        if (this.$data.games?.length > 0) {
-          console.info('there')
-          this.$data.games.slice().sort(function(a, b){
-            return (a[this.$data.sortBy] > b[this.$data.sortBy]) ? 1 : -1;
-          });
-          console.info("DATA"+this.$data.games)
-          return this.$data.games;
-        } else {
-         console.info('there')
-         return []
-        }
-    }
-  },
+  // watch: {
+  //   sortedGames() {
+  //     console.info(this.$data.games)
+  //       if (this.$data.games?.length > 0) {
+  //         console.info('there')
+  //         this.$data.games.slice().sort(function(a, b){
+  //           return (a[this.$data.sortBy] > b[this.$data.sortBy]) ? 1 : -1;
+  //         });
+  //         console.info("DATA"+this.$data.games)
+  //         return this.$data.games;
+  //       } else {
+  //        console.info('there')
+  //        return []
+  //       }
+  //   }
+  // },
 };
 </script>
 
@@ -72,7 +72,7 @@ export default {
   width: 100px; 
 }
 .icon {
-    width: 2rem;
-    height: 2rem;
+    width: 1rem;
+    height: 1rem;
 }
 </style>
