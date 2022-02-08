@@ -1,6 +1,8 @@
 <template>
     <div id="app">
       <Navbar/>
+      <GameCard/>
+      <UserCard/>
       <router-view />
     </div> 
 </template>
@@ -8,21 +10,18 @@
 
 <script>
 import Navbar from "./components/Navbar/Navbar.vue";
+import GameCard from "./components/Game/GameCard.vue";
+import UserCard from "./components/Game/UserCard.vue";
 
 export default {
   name: "App",
   components: {
-    Navbar
+    Navbar,
+    GameCard,
+    UserCard
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 </style>
