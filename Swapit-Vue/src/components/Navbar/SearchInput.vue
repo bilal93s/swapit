@@ -1,6 +1,6 @@
 <template>
   <div id="SearchInput">
-    <input v-model="searchQuery">
+    <input class="search-input" v-model="searchQuery">
     <div v-show ="searchQuery" v-for="game in resultQuery" :key="game.id">{{game.title}}</div>
   </div>
 </template>
@@ -38,5 +38,17 @@
   };
 </script>
 
-<style scoped>
+<style>
+.search-input{
+  background-color: rgba(41, 100, 124, 0.2);
+  color: rgba(41, 100, 124);
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  height: 15px;
+  padding: 5px;
+}
+.search-input:focus{
+  outline: rgba(41, 100, 124) 2px solid;
+}
 </style>

@@ -1,13 +1,15 @@
 <template>
     <div id="app">
       <Navbar/>
+      <GameCard/>
+      <UserCard/>
       <router-view />
-       <Toggle>
-    <Login/>
-    </Toggle>
-    <Register/>
-    <GameSearchInput/>
-    <GameExchange/>
+      <Toggle>
+      <Login/>
+      </Toggle>
+      <Register/>
+      <GameSearchInput/>
+      <GameExchange/>
     </div> 
 </template>
 
@@ -20,6 +22,8 @@ import Toggle from "./components/Toggle/Toggle.vue";
 import GameSearchInput from "./components/Card/Game_Search_Input.vue"
 import GameExchange from "./components/Exchange/Game_Exchange.vue";
 
+import GameCard from "./components/Game/GameCard.vue";
+import UserCard from "./components/Game/UserCard.vue";
 
 export default {
   name: "App",
@@ -29,17 +33,12 @@ export default {
     Register,
     Toggle,
     GameSearchInput,
-    GameExchange
+    GameExchange,
+    GameCard,
+    UserCard
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 </style>
