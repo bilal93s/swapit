@@ -5,7 +5,7 @@ security:
         App\Entity\User: 'auto'
 
     # https://symfony.com/doc/current/security/authenticator_manager.html
-    enable_authenticator_manager: true
+    enable_authenticator_manager: false
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -22,12 +22,12 @@ security:
             pattern: ^/_(profiler|wdt)
             security: false
         login:
-            pattern: ^/api/login$
+            pattern: ^/api/login
             stateless: true
             lazy: true
             provider: app_user_provider
             json_login:
-                check_path: /login
+                check_path: /api/login
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -39,7 +39,7 @@ security:
             anonymous: true
             lazy: true
             guard:
-                authentificators:
+                authenticators:
                     - lexik_jwt_authentication.jwt_token_authentificator
             provider: jwt
             jwt: ~

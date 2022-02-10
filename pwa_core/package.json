@@ -1,11 +1,11 @@
 {
-  "name": "pwa",
+  "name": "pwa_core",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "start": "next start",
+    "start": "next start -p 3001",
     "test": "jest"
   },
   "dependencies": {

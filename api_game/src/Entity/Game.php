@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
+ * 
  */
 #[ApiResource(
     itemOperations: [
