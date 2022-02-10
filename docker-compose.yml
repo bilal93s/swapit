@@ -88,8 +88,8 @@ services:
       context: ./pwa_core
       target: api_platform_pwa_prod
     environment:
-      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: http://caddy_core
-      NEXT_PUBLIC_ENTRYPOINT: http://caddy_core
+      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: http://caddy:81
+      NEXT_PUBLIC_ENTRYPOINT: http://caddy:81
     ports:
       - 3001:3001
 
@@ -102,7 +102,7 @@ services:
       - pwa_core
     environment:
       PWA_UPSTREAM: pwa_core:3001
-      SERVER_NAME: ${SERVER_NAME:-localhost, caddy_core:80}
+      SERVER_NAME: ${SERVER_NAME:-:81}
       MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY:-!ChangeMe!}
       MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY:-!ChangeMe!}
     restart: unless-stopped

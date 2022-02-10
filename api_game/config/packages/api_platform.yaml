@@ -11,10 +11,10 @@ api_platform:
              apiKey:
                 name: Authorization
                 type: header
-    # Mercure integration, remove if unwanted
-    mercure: ~
+    # # Mercure integration, remove if unwanted
+    # mercure: ~
     # Good cache defaults for REST APIs
-    defaults:
-        stateless: true
-        cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
+    # defaults:
+    #     stateless: true
+    #     cache_headers:
+    #         vary: ['Content-Type', 'Authorization', 'Origin']
