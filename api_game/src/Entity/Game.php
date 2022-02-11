@@ -10,7 +10,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Form\FormTypeInterface;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Annotation\ApiResource;
-
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use App\Filter\Gamefilter;
 
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
@@ -31,6 +36,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
         ]
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'name' => 'partial','status' => 'exact'])]
+#[ApiFilter(DateFilter::class, properties: ['first_release_date'])]
+#[ApiFilter(GameFilter::class)]
+#[ApiFilter(OrderFilter::class, properties: ['aggregated_rating_count' => 'ASC','rating','rating_count','total_rating','total_rating_count','popularity','release_dates'])]
+#[ApiFilter(PropertyFilter::class)]
+
 class Game
 {
     /**

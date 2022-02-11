@@ -19,12 +19,22 @@
     data: () => ({
       searchQuery: null,
       filters: {
-        genres: ["platform","FPS","MMO","Adventure","Action","Family"],
-        platforms: ["PS3","PS4","PS5","Xbox one","Xbox One X","Wii","Wii U"],
-        modes: ["multiplayer","Solo"],
+        genres: {},
+        platforms: {},
+        modes: {},
     },
       mobile: false,
     }),
+    async created () {
+    const genres = await fetch("https://localhost/api/genres")
+    this.$data.filters.genres = await genres
+
+    const platforms = await fetch("https://localhost/api/platforms")
+    this.$data.filters.platforms = await platforms
+
+    const modes = await fetch("https://localhost/api/modes")
+    this.$data.filters.modes = await modes  
+  },
   };
 </script>
 

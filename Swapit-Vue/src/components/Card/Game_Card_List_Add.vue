@@ -1,5 +1,5 @@
 <template>
-  <div class="game_card_list">
+  <div class="game_card_list" v-if="games">
     <div class="game_card" v-for="(game,key) in games" id="OwnList" :key="key">
       <GameCard :game="game" />
       <a v-if="!added(game.id)" @click="add(game)" title="arrow icons" class="my-icon">
@@ -20,8 +20,7 @@ export default {
   name: "Game_Card_List_Add",
   props: {
     games: {
-      type: Array,
-      required: true
+      type: Object,
     },
   },
   inject: ['add', 'added'],

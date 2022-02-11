@@ -1,7 +1,7 @@
 <template>
   <div id="Game_Search" class="gameSearch">
-    <input v-model="searchQuery">
-    <GameCardListAdd v-show="searchQuery" :games="resultQuery"/>
+    <input v-model="searchQuery" @input="resultQuery">
+    <GameCardListAdd v-show="searchQuery" :games="resources"/>
     <GameCardListOwn v-show="my_games" :games="my_games"/>
     <Button title="Confirmer" :onClick="HandleSubmit" />
   </div>
@@ -27,29 +27,12 @@
       },
       data: () => ({
         searchQuery: null,
-        resources: [
-          { id: 1, title: "NBA 2k",description:'test1', img:"" },
-          { id: 2, title: "Rocket League",description:'test2', img:""  },
-          { id: 3, title: "God Of War",description:'test3', img:""  },
-          { id: 4, title: "FIFA 21",description:'test4', img:""  },
-          { id: 5, title: "GTA", description:'test5', img:""  }
-        ],
+        resources: {},
         my_games: [],
         filter: false,
       }),
       computed: { 
-        resultQuery() {
-          if (this.searchQuery) {
-            return this.resources.filter(item => {
-              return this.searchQuery
-                .toLowerCase()
-                .split(" ")
-                .every(v => item.title.toLowerCase().includes(v));
-            });
-          } else {
-            return this.resources;
-          }
-        },
+      
       },
       methods:{
         add: function(game) {
@@ -71,6 +54,18 @@
           // this.$emit('submit', this.my_games)
           console.info(this.$data.my_games)
         },
+        resultQuery() {
+          console.info(this.$data.searchQuery)
+          if (this.searchQuery) {
+            fetch(`https://localhost/api/games?name=${this.searchQuery}`).then(data => {
+              console.info( data)
+            this.$data.resources = data['hydra:member']
+            
+          }).catch(err => {
+            console.error(err)
+          })
+          }
+      },
       },
       provide() {
         return {
