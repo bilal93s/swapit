@@ -1,18 +1,21 @@
 <template>
     <b-container>
-        <Sidebar/>
+        <GameLayer/>
         <GameCard/>
+        <UserCard/>
     </b-container>
 </template>
 
 <script>
-import Sidebar from "../components/Filter/SideBar.vue";
 import GameCard from "../components/Card/Game_Card.vue";
+import GameLayer from "../components/Game/GameLayer.vue";
+import UserCard from "../components/Game/UserCard.vue";
 
 export default {
     components: {
-        Sidebar,
-        GameCard
+        GameCard,
+        GameLayer,
+        UserCard,
     }
 };
 </script>

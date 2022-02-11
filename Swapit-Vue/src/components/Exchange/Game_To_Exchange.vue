@@ -48,7 +48,7 @@ export default {
 .game_card_list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: auto;
   width: 100%;
