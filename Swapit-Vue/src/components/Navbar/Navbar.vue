@@ -6,8 +6,8 @@
         </div>
         <SearchInput></SearchInput>
         <div class="picto-ctn">
-            <img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20">
-            <img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20">
+            <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
+            <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
             <img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20">
             <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
             <router-link to="/signup">Inscription</router-link>

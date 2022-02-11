@@ -1,6 +1,6 @@
 <template>
   <div class="game_card_list">
-    <div class="game_card" v-for="(game,key) in games" id="OwnList" :key="key">
+    <div class="" v-for="(game,key) in games" id="OwnList" :key="key">
       <GameCard :game="game" />
       <a v-if="!added(game.id)" @click="add(game)" title="arrow icons" class="my-icon">
         <img class="icon"

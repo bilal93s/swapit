@@ -1,6 +1,6 @@
 <template>
-    <div class="container-game-card">
-        <div class="game-card">
+    <div class="container-game-layer">
+        <div class="game-layer">
             <div class="game-img">
                     <img src="../../assets/images/acv.png" width="80" height="80">
             </div>
@@ -18,8 +18,8 @@
 
 </script>
 
-<style>
-.container-game-card {
+<style scoped>
+.container-game-layer {
     background-image: url("https://cdn1.epicgames.com/400347196e674de89c23cc2a7f2121db/offer/AC%20KINGDOM%20PREORDER_STANDARD%20EDITION_EPIC_Key_Art_Portrait_640x854-640x854-288120c5573756cb988b6c1968cebd86.png");
     background-repeat: no-repeat;
 	background-size: cover;
@@ -30,7 +30,7 @@
     margin: 100px 20px;
     display: flex;
 }
-.game-card {
+.game-layer {
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.8);

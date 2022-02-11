@@ -1,6 +1,6 @@
 <template>
   <div class="game_card">
-    <img :src="game.img" class="icon" alt="icone" style="width:100%">
+    <img src="../../assets/images/acv.png" class="icon">
     <div class="container">
       <h4><b>{{game.title}}</b></h4>
       <p>{{game.description}}</p>
@@ -28,15 +28,20 @@ export default {
 
 <style scoped>
 
-.game-card{
+.game_card{
   margin: auto;
+  display: flex;
+  background-color: rgba(41, 100, 124, 0.2);
+  width: 15rem;
+  height: 4rem;
+  overflow: hidden;
+  border-radius: 1rem;
 }
 .icon-wrapper {
   margin: auto;
-  width: 100px; 
 }
 .icon {
-    width: 2rem;
-    height: 2rem;
+    width: auto;
+    height: 100%;
 }
 </style>
