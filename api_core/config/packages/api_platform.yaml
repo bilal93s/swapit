@@ -11,10 +11,12 @@ api_platform:
              apiKey:
                 name: Authorization
                 type: header
+    
     # Mercure integration, remove if unwanted
     mercure: ~
     # Good cache defaults for REST APIs
     defaults:
         stateless: true
+        route_prefix: '/api'
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
