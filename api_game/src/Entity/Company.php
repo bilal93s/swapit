@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
         ]
     ]
 )]
+#[ApiFilter(PropertyFilter::class)]
 class Company
 {
     /**

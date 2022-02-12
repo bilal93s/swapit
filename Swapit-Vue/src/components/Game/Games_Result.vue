@@ -1,7 +1,5 @@
 <template>
     <b-container>
-        <Sidebar/>
-        <input v-model="searchQuery" @input="resultQuery">
         <div v-if="resources">
                     <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
         </div>
@@ -10,24 +8,34 @@
 </template>
 
 <script>
-import Sidebar from "../components/Filter/SideBar.vue";
-import Game from "../components/Game/GameCard.vue";
+import Game from "./GameCard.vue";
 
 export default {
+    name:"Game_Result",
     components: {
-        Sidebar,
         Game
     },
     props: {
-        games: {
-            type: Array,
+        query: {
+            type: String,
+        },
+        fixed: {
+            type: Boolean,
+            default: false,
         },
     },
     data: () => ({
-        searchQuery: null,
         resources: [],
         filter: false,
     }),
+    computer: {
+        searchQuery() {
+            return this.$data.searchQuery ?? null
+       },
+    },
+    created() {
+        this.resultQuery()
+    },
     methods:{
          resultQuery() {
           console.info(this.$data.searchQuery)

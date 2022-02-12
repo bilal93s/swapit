@@ -1,26 +1,31 @@
 <template>
+  <div id="SearchInput">
+    <input class="search-input" >
     <b-container>
-        <Sidebar/>
-        <input v-model="searchQuery" @input="resultQuery">
-        <div v-if="resources">
-                    <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
-        </div>
-        <!-- <GameCard/> -->
+      <!-- <GameCard/> -->
     </b-container>
+    <!-- <div v-show ="searchQuery" v-for="game in resultQuery" :key="game.id">{{game.title}}</div> -->
+    <!-- <GamesResult v-if="resources" :query="searchQuery"/> -->
+  </div>
+  
 </template>
 
 <script>
-import Sidebar from "../components/Filter/SideBar.vue";
-import Game from "../components/Game/GameCard.vue";
+  import Game from "../Game/GameCard.vue";
 
-export default {
-    components: {
-        Sidebar,
+  // import GamesResult from "../Game/Games_Result.vue";
+  export default {
+    name: "SearchInput",
+  components: {
         Game
     },
     props: {
-        games: {
-            type: Array,
+        query: {
+            type: String,
+        },
+        fixed: {
+            type: Boolean,
+            default: false,
         },
     },
     data: () => ({
@@ -28,6 +33,14 @@ export default {
         resources: [],
         filter: false,
     }),
+    // computer: {
+    //     searchQuery() {
+    //         return this.$data.searchQuery ?? null
+    //    },
+    // },
+    created() {
+        this.resultQuery()
+    },
     methods:{
          resultQuery() {
           console.info(this.$data.searchQuery)
@@ -49,9 +62,20 @@ export default {
           })          }
       },
     }
-};
+  };
 </script>
 
 <style scoped>
-
+.search-input{
+  background-color: rgba(41, 100, 124, 0.2);
+  color: rgba(41, 100, 124);
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  height: 15px;
+  padding: 5px;
+}
+.search-input:focus{
+  outline: rgba(41, 100, 124) 2px solid;
+}
 </style>

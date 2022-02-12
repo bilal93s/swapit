@@ -1,7 +1,11 @@
 <template>
   <div id="SearchInput">
-    <input class="search-input" v-model="searchQuery">
-    <div v-show ="searchQuery" v-for="game in resultQuery" :key="game.id">{{game.title}}</div>
+    <input class="search-input" v-model="searchQuery" @input="refreshRessource">
+    <div v-if="enableSuggestion">
+      <div v-show ="searchQuery" v-for="(game,key) in resultQuery" :key="game.name+key">
+        {{game.name}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,29 +13,56 @@
 
   export default {
     name: "SearchInput",
+    props: {
+      enableSuggestion: {
+        type: Boolean,
+        default: false,
+      },
+    },
     data: () => ({
       searchQuery: null,
-      resources: [
-        { id: 1, title: "javascript for dummies" },
-        { id: 2, title: "vue for dummies" },
-        { id: 3, title: "dos for dummies" },
-        { id: 4, title: "windows for dummies" },
-        { id: 5, title: "html for dummies" }
-      ],
-      list: [],
-      filter: false,
+      resources: [],
     }),
+    methods: {
+      refreshRessource() {
+        if (this.$data.searchQuery) {
+          fetch(`https://localhost/api/games.json?properties%5B%5D=name&name=${this.searchQuery}`).then(response => response.json()).then(data => {
+            console.log(this.$data.searchQuery)
+            console.info(data)
+            this.$data.resources = data;
+          }).catch(err => {
+            console.error(err)
+          })
+        } 
+      },
+      ressourceFormater(resources) {
+        if(resources.length >10) {
+            return resources.slice(0,10)
+          } else {
+            return resources
+          }
+      },
+    },
     computed: { 
       resultQuery() {
-        if (this.searchQuery) {
-          return this.resources.filter(item => {
+        if (this.$data.searchQuery && this.$data.resources) {
+          var resources = this.ressourceFormater(this.$data.resources)
+          // console.log('resultQuery')
+          // console.info(resources.filter(item => {
+          //   return this.searchQuery
+          //     .toLowerCase()
+          //     .split(" ")
+          //     .every(v => item.name.toLowerCase().includes(v.toLowerCase()));
+          // }))
+          return resources.filter(item => {
             return this.searchQuery
               .toLowerCase()
               .split(" ")
-              .every(v => item.title.toLowerCase().includes(v));
+              .every(v => item.name.toLowerCase().includes(v));
           });
+          
         } else {
-          return this.resources;
+          return []
         }
       }
     },   

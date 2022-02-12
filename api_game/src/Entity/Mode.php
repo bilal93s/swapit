@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 
 
 /**
@@ -25,6 +27,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
         ]
     ]
 )]
+#[ApiFilter(PropertyFilter::class)]
 class Mode
 {
     /**

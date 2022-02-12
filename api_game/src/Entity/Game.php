@@ -34,7 +34,8 @@ use App\Filter\Gamefilter;
         'get' => [
             'normalisation_context' => ['groups' => ['read:Game:collection']]
         ]
-    ]
+    ],
+    attributes: ["pagination_maximum_items_per_page" => 20]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'name' => 'partial','status' => 'exact'])]
 #[ApiFilter(DateFilter::class, properties: ['first_release_date'])]

@@ -20,7 +20,7 @@ export default {
   name: "Game_Card_List_Add",
   props: {
     games: {
-      type: Object,
+      type: Array,
     },
   },
   inject: ['add', 'added'],

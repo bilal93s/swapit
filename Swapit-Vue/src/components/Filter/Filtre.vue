@@ -3,10 +3,10 @@
     <slot>
       <h1>{{title}}</h1>
     </slot>
-      <li v-for="(value,k) in filtre_data" :key="k" active-class="active" tag="button" exact class="side-btn">
+      <li v-for="(value,k) in resource" :key="k" active-class="active" tag="button" exact class="side-btn">
         <div class="link-container">
           <input type="checkbox" id="scales" name="scales" checked>
-          <label for="scales" class ="filter_value">{{value}}</label>
+          <label for="scales" class ="filter_value">{{value.name}}</label>
         </div>
       </li>
   </div>
@@ -17,7 +17,7 @@
     name: "Filtre",
     props:{
       title: String,
-      filtre_data: Array
+      resource: Array
     },
     data: () => ({
       searchQuery: null,
