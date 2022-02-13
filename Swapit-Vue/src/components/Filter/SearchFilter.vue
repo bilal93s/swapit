@@ -1,22 +1,26 @@
 <template>
   <div id="SearchFilter">
-    <SearchInput/>
     <Filtres :filtres_data = "filters"></Filtres>
   </div>
 </template>
 
 <script>
-  import SearchInput from "./SearchInput.vue";
+  // import SearchInput from "./SearchInput.vue";
   import Filtres from "./Filtres.vue";
   export default {
     components: {
-      SearchInput,
+      // SearchInput,
       Filtres,
     },
     name: "SearchFilter",
     data: () => ({
       filters : {}
     }),
+    // provide() {
+    //     return {
+    //     filtersSelected: this.filtersSelected,
+    //     UpdateFilters: this.UpdateFilters,
+    //     }}
   };
 </script>
 
