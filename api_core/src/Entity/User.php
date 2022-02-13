@@ -34,6 +34,11 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 //         ]
 //     ]
 // )]
+
+#[ApiResource(
+    
+)]
+
 class User implements JWTUserInterface
 {
     /**

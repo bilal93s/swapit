@@ -1,19 +1,19 @@
 <template>
     <div @submit.prevent="handleSubmit" @keydown.enter.prevent="handleSubmit" class="form">
       <slot v-bind="{handleSubmit, errors, with_label}" :values="values"></slot>
-    <PulseLoader :loading="isLoading" v-if="isLoading">
+    <!-- <PulseLoader :loading="isLoading" v-if="isLoading">
       
-    </PulseLoader>
+    </PulseLoader> -->
     </div>
 </template>
 
 <script>
 
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+// import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 export default {
   name: "Formik",
   components: {
-     PulseLoader
+    //  PulseLoader
     },
   props: {
     initialValues: {Object, default: () => ({})},
@@ -64,7 +64,7 @@ export default {
           // this.$data.isLoading = false;
         });
       },
-  },
+    },
 };
 </script>
 

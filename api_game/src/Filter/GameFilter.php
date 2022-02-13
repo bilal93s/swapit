@@ -32,13 +32,12 @@ final class GameFilter extends AbstractContextAwareFilter
         //     ->setParameter($parameterName, $value);
         // $queryBuilder->from(Gmae::class,'user')
 
-        if ($property  == 'name') {
+        // if ($property  == 'name') {
 
-            $queryBuilder = $queryBuilder->andWhere("$alias.name LIKE :$parameterName")
-                ->setParameter($parameterName,"%{$value}%");
-        }
+        //     $queryBuilder = $queryBuilder->andWhere("$alias.name LIKE :$parameterName")
+        //         ->setParameter($parameterName,"%{$value}%");
+        // }
         if($property  == 'involved_companies'){
-
             $queryBuilder =  $queryBuilder->Join("$alias.$property", 'ge')->andWhere("ge.id IN (:$parameterName)")
             ->setParameter($parameterName, $value);
         }

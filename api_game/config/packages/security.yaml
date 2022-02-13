@@ -46,6 +46,10 @@ security:
         # - { path: ^/login, roles: ROLE_ADMIN }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/games, roles: PUBLIC_ACCESS }
+        - { path: ^/api/genres, roles: PUBLIC_ACCESS }
+        - { path: ^/api/platforms, roles: PUBLIC_ACCESS }
+        - { path: ^/api/companies, roles: PUBLIC_ACCESS }
+        - { path: ^/api/modes, roles: PUBLIC_ACCESS }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

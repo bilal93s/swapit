@@ -5,9 +5,9 @@
                     <img src="../../assets/images/acv.png" width="80" height="80">
             </div>
             <div class="info-game">
-                <div class="title-game">Assassin's Creed Valhalla</div>
+                <div class="title-game">{{game.name}}</div>
                 <div class="game-details">
-                    <div class="game-desc">Black Ops Cold War will drop fans into the depths of the Cold War’s volatile geopolitical battle of the early 1980s. Nothing is ever as it seems in a gripping single-player Campaign, where players will come face-to-face with historical figures and hard truths, as they battle around the globe through iconic locales like East Berlin, Vietnam, Turkey, Soviet KGB headquarters and more.</div>
+                    <div class="game-desc">{{game.summary}}</div>
                 </div>
             </div>
         </div>
@@ -15,7 +15,19 @@
 </template>
 
 <script>
-
+  export default {
+    name: "GameCard",
+    data: () => ({
+      filters : {}
+    }),
+    props: {
+      game: {
+        type: Object,
+        required: true,
+      },
+    },
+  };
+  
 </script>
 
 <style scoped>

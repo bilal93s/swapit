@@ -2,6 +2,8 @@
     <div id="app">
       <Navbar/>
       <Sidebar/>
+      <!-- <GameCard/>
+      <UserCard/> -->
       <router-view />
       <Toggle/>
       <GameExchange/>
@@ -15,6 +17,9 @@ import Sidebar from "./components/Filter/SideBar.vue";
 import Toggle from "./components/Toggle/Toggle.vue";
 import GameExchange from "./components/Exchange/Game_Exchange.vue";
 
+// import GameCard from "./components/Game/GameCard.vue";
+// import UserCard from "./components/Game/UserCard.vue";
+
 export default {
   name: "App",
   components: {
@@ -22,6 +27,8 @@ export default {
     Toggle,
     GameExchange,
     Sidebar,
+    // GameCard,
+    // UserCard
   }
 };
 </script>

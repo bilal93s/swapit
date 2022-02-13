@@ -1,21 +1,52 @@
 <template>
     <b-container>
-        <GameLayer/>
-        <GameCard/>
-        <UserCard/>
+        <Sidebar/>
+        <input v-model="searchQuery" @input="resultQuery">
+        <div v-if="resources">
+                    <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+        </div>
+        <!-- <GameCard/> -->
     </b-container>
 </template>
 
 <script>
-import GameCard from "../components/Card/Game_Card.vue";
-import GameLayer from "../components/Game/GameLayer.vue";
-import UserCard from "../components/Game/UserCard.vue";
+import Sidebar from "../components/Filter/SideBar.vue";
+import Game from "../components/Game/GameLayer.vue";
 
 export default {
     components: {
-        GameCard,
-        GameLayer,
-        UserCard,
+        Sidebar,
+        Game
+    },
+    props: {
+        games: {
+            type: Array,
+        },
+    },
+    data: () => ({
+        searchQuery: null,
+        resources: [],
+        filter: false,
+    }),
+    methods:{
+        resultQuery() {
+            console.info(this.$data.searchQuery)
+            if (this.searchQuery) {
+                fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
+                console.info(data)
+            this.$data.resources = data;
+        }).catch(err => {
+            console.error(err)
+        })
+        } else {
+            fetch(`https://localhost/api/games.json?popular`).then(response => response.json()).then(data => {
+            console.info(data)
+            this.$data.resources = data;
+        
+        }).catch(err => {
+            console.error(err)
+        })          }
+    },
     }
 };
 </script>

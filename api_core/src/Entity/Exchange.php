@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ExchangeRepository::class)
  */
+
+#[ApiResource(
+    
+)]
+
 class Exchange
 {
     /**

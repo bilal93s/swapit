@@ -4,6 +4,7 @@
     <GameCardListAdd v-show="searchQuery" :games="resources"/>
     <GameCardListOwn v-show="my_games" :games="my_games"/>
     <Button title="Confirmer" :onClick="HandleSubmit" />
+    <Button title="vider" :onClick="clearList" />
   </div>
 </template>
 
@@ -27,7 +28,7 @@
       },
       data: () => ({
         searchQuery: null,
-        resources: {},
+        resources: [],
         my_games: [],
         filter: false,
       }),
@@ -37,6 +38,7 @@
       methods:{
         add: function(game) {
           if (!this.added(game)) {
+            console.log( this.$data.my_games);
             this.$data.my_games.push(game)
           }
         },
@@ -50,16 +52,25 @@
             return game.id
           })).includes(game_id)
         },
+        clearList: function() {
+          // this.$emit('submit', this.my_games)
+          this.$data.my_games = []
+          console.info(this.$data.my_games)
+      },
         HandleSubmit: function() {
           // this.$emit('submit', this.my_games)
           console.info(this.$data.my_games)
+          console.info('toto')
         },
         resultQuery() {
           console.info(this.$data.searchQuery)
           if (this.searchQuery) {
-            fetch(`https://localhost/api/games?name=${this.searchQuery}`).then(data => {
-              console.info( data)
-            this.$data.resources = data['hydra:member']
+             fetch(`https://localhost/api/games.jsonld?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
+              // console.info(data[0][])
+            this.$data.resources = data;
+            // fetch(`https://localhost/api/games?name=${this.searchQuery}.json`).then(data => {
+            //   console.info(data)
+            // this.$data.resources = data['hydra:member']
             
           }).catch(err => {
             console.error(err)
@@ -73,6 +84,7 @@
         add: this.add,
         supp: this.supp,
         added: this.added,
+        clearList: this.clearList,
         }
       }, 
     };

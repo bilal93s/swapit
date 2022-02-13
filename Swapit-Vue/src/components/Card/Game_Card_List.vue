@@ -1,6 +1,6 @@
 <template>
   <div class="game_card_list">
-    <div class="" v-for="(game,key) in games" id="OwnList" :key="key">
+    <div class="game_card" v-for="(game,key) in myList" id="OwnList" :key="key">
       <GameCard :game="game" />
       <a v-if="added(game.id)" @click="supp(game)" title="arrow icons" class="my-icon">
         <img class="icon"
@@ -8,6 +8,7 @@
         alt="Grapefruit slice atop a pile of other slices">
         </a>
     </div>
+    
   </div>
 </template>
 
@@ -15,9 +16,9 @@
 import GameCard from './Game_Card.vue';
 export default {
   name: "Game_Card_List_Own",
-   components: {
-      GameCard,
-      },
+  components: {
+    GameCard,
+  },
   props: {
     games: {
       type: Array,
@@ -32,6 +33,14 @@ export default {
     }
   },
   methods: {
+    
+  },
+  computed: {
+    myList() {
+      return this.$props.games ?? []
+    }
+
+    
     // sortMode: function(s) {
     //     if(s === this.sortBy) {
     //         this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';

@@ -13,36 +13,10 @@
       SearchInput,
       Filtres,
     },
-    // inject: {
-    //   getIGDBGenres: () => {
-    //     fetch("https://localhost/genres")
-    //       .then(response => {
-    //         return response;
-    //       });
-    //   },
-    //   getIGDBPlatform: () => {
-    //     fetch("https://localhost/platforms")
-    //       .then(response => {
-    //         return response;
-    //       });
-    //   },
-    // },
-
     name: "SearchFilter",
-
     data: () => ({
       filters : {}
     }),
-// mounted() {
-//       fetch("https://localhost/genres")
-//       .then(response => { this.filters =  response })
-//     },
-//     provide:() => {
-//         getGenres: () => {
-//           return this.filters;
-//         }
-
-//     }
   };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div id="Filtres" class="menu-items">
     <ul v-for="(filter,title) in filters" :key="title">
-      <Filtre :title="title" :filtre_data="filter"></Filtre>
+      <Filtre :title="title" :resource="filter"></Filtre>
     </ul>
   </div>
 </template>
@@ -13,27 +13,41 @@
       Filtre,
     },
     name: "Filtres",
-    props:{
-      filtres_data: Object
-    },
+    // props:{
+    //   filtres_data: Object
+    // },
     data: () => ({
       searchQuery: null,
       filters: {
-        genres: {},
-        platforms: {},
-        modes: {},
+        genres: [],
+        platforms: [],
+        modes: [],
     },
       mobile: false,
     }),
     async created () {
-    const genres = await fetch("https://localhost/api/genres")
-    this.$data.filters.genres = await genres
 
-    const platforms = await fetch("https://localhost/api/platforms")
-    this.$data.filters.platforms = await platforms
-
-    const modes = await fetch("https://localhost/api/modes")
-    this.$data.filters.modes = await modes  
+      fetch("https://localhost/api/genres.json?properties%5B%5D=name").then(response => response.json()).then(data => {
+            console.info(data.members)
+         this.$data.filters.genres = data;
+          
+        }).catch(err => {
+          console.error(err)
+        })
+        fetch("https://localhost/api/platforms.json?properties%5B%5D=name").then(response => response.json()).then(data => {
+            console.info(data)
+          this.$data.filters.platforms= data;
+          
+        }).catch(err => {
+          console.error(err)
+        })
+          fetch("https://localhost/api/modes.json?properties%5B%5D=name").then(response => response.json()).then(data => {
+            console.info(data)
+            this.$data.filters.modes = data;
+          
+        }).catch(err => {
+          console.error(err)
+        }) 
   },
   };
 </script>

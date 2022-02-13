@@ -2,7 +2,7 @@
   <div class="game_card">
     <img src="../../assets/images/acv.png" class="icon">
     <div class="container">
-      <h4><b>{{game.title}}</b></h4>
+      <h4><b>{{game.name}}</b></h4>
       <p>{{game.description}}</p>
     </div>
   </div>
