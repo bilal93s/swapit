@@ -1,6 +1,6 @@
 <template>
   <div id="SearchInput">
-    <input v-model="searchQuery">
+    <!-- <input v-model="searchQuery"> -->
     <div v-show ="searchQuery" v-for="game in resultQuery" :key="game.id">{{game.title}}</div>
   </div>
 </template>

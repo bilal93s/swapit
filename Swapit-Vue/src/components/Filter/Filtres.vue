@@ -1,8 +1,8 @@
 <template>
   <div id="Filtres" class="menu-items">
-    <ul v-for="(filter,title) in filters" :key="title">
+    <div v-for="(filter,title) in filters" :key="title">
       <Filtre :title="title" :resource="filter"></Filtre>
-    </ul>
+    </div>
   </div>
 </template>
 
@@ -68,12 +68,10 @@
 .menu-items {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
     margin-left: 6px;
 }
 
 .menu-items > * {
-    margin-top: 60px;
 }
 
 .side-btn {

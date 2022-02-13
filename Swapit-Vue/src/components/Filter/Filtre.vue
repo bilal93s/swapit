@@ -3,12 +3,12 @@
     <slot>
       <h1>{{title}}</h1>
     </slot>
-      <li v-for="(value,k) in resource" :key="k" active-class="active" tag="button" exact class="side-btn">
+      <div v-for="(value,k) in resource" :key="k" active-class="active" tag="button" exact class="side-btn">
         <div class="link-container">
           <input type="checkbox" id="scales" name="scales" checked>
           <label for="scales" class ="filter_value">{{value.name}}</label>
         </div>
-      </li>
+      </div>
   </div>
 </template>
 
@@ -42,12 +42,11 @@
 .menu-items {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
     margin-left: 6px;
 }
 
 .menu-items > * {
-    margin-top: 60px;
+    margin-top: 10px;
 }
 
 .side-btn {

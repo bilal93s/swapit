@@ -1,12 +1,19 @@
 <template>
     <div class="navbar-ctn">
-        <router-link to="/">
-            <div class="logo">
-                <img src="../../assets/images/logo.svg" width="60" height="30">
-                <img src="../../assets/images/logo-text.svg" width="60" height="30">
-            </div>
-        </router-link>
-        <SearchInput v-model="searchQuery" @input="resultQuery" :enableSuggestion="!home"></SearchInput>
+        <div class="flex-logo">
+            <router-link to="/">
+                <div class="logo">
+                    <img src="../../assets/images/logo.svg" width="60" height="30">
+                    <img src="../../assets/images/logo-text.svg" width="60" height="30">
+                </div>
+            </router-link>
+            <router-link to="/games" class="nav-link">Games</router-link>
+        </div>
+
+        <div>
+            <SearchInput v-model="searchQuery" @input="resultQuery" :enableSuggestion="!home"></SearchInput>
+        </div>
+
         <div class="picto-ctn">
             <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
             <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
@@ -80,6 +87,12 @@
 </script>
 
 <style>
+.flex-logo{
+    display: flex;
+    width: 200px;
+    justify-content: space-around;
+        align-items: center;
+}
 .navbar-ctn{
     display: flex;
     height: auto;
@@ -92,22 +105,23 @@
 .picto-ctn{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .picto-nav{
     margin-left: 10px;
 }
 
 .search-input{
-  background-color: rgba(41, 100, 124, 0.2);
-  color: rgba(41, 100, 124);
-  border-radius: 5px;
-  border: none;
-  width: 300px;
-  height: 15px;
-  padding: 5px;
+    background-color: rgba(41, 100, 124, 0.2);
+    color: rgba(41, 100, 124);
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+    height: 15px;
+    padding: 5px;
 }
 .search-input:focus{
-  outline: rgba(41, 100, 124) 2px solid;
+    outline: rgba(41, 100, 124) 2px solid;
 }
 
 </style>
