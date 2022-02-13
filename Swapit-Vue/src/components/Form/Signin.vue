@@ -1,6 +1,6 @@
 <template>
   <div class="body-container">
-    <Formik :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
+    <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
       <Field id="email" name="email" type="email" :with_label="with_label" :error="errors.email"/>
       <label v-if="with_label"><span>Email</span></label>
       <small v-if="errors.email"> {{errors.email}} </small>
@@ -20,6 +20,7 @@
   import { SigninSchema as validator } from "../../lib/Validators/Signin_validator.js";
   import Formik from "../../lib/Formik.vue";
   import Field from "../../lib/Field.vue";
+  import axios from 'axios';
   export default {
     components: {
       Formik,
@@ -28,6 +29,18 @@
     },
     computed:{
       validator:()=>validator,
+    },
+    methods: {
+      onSubmit:(data)=> {
+        axios.get('https://localhost/api/users')
+        .then(function (response) {
+          console.log(data);
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
     },
     name: "Signin",
   };

@@ -68,8 +68,6 @@ services:
     ports:
       - '5432:5432'
 
-  
-  
   php_core:
         build:
           context: ./api_core
