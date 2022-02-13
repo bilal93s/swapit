@@ -1,20 +1,41 @@
 <template>
-  <div class="body-container">
-    <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
-      <label v-if="with_label"><span>Username</span></label>
-      <Field name="login" type="text"> </Field>
-      <small v-if="errors.login"> {{errors.login}} </small>
-      <label v-if="with_label"><span> Email</span></label>
-      <Field name="email" type="email"> </Field>
-      <small v-if="errors.email"> {{errors.email}} </small>
-      <label v-if="with_label"><span>mot de passe</span></label>
-      <Field name="password" type="password"> </Field>
-      <small v-if="errors.password"> {{errors.password}} </small>
-      <label v-if="with_label"><span> confirmer mot de passe</span></label>
-      <Field name="password_confirm" type="password"> </Field>
-      <small v-if="errors.password_confirm"> {{errors.password_confirm}} </small>
-      <Button :onClick='handleSubmit' type="submit" tiltle="Inscription"> </Button>
-    </Formik>
+  <div class="">
+    <main class="form-signin">
+      <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
+        <h1 class="h3 mb-3 fw-normal">Inscription</h1>
+
+        <div class="form-floating">
+          <Field class="form-control" id="floatingInput" placeholder="Nom d'utilisateur" name="login" type="text"> </Field>
+          <small v-if="errors.login"> {{errors.login}} </small>
+          <label v-if="with_label" for="floatingInput">Nom d'utilisateur</label>
+        </div>
+
+        <div class="form-floating">
+          <Field class="form-control" id="floatingInput" placeholder="name@example.com" name="email" type="email"> </Field>
+          <small v-if="errors.email"> {{errors.email}} </small>
+          <label v-if="with_label" for="floatingInput">Adresse email</label>
+        </div>
+
+        <div class="form-floating">
+          <Field class="form-control" id="floatingPassword" name="password" placeholder="Mot de passe" type="password"> </Field>
+          <small v-if="errors.password"> {{errors.password}} </small>
+          <label v-if="with_label" for="floatingPassword">Mot de passe</label>
+        </div>
+
+        <div class="form-floating">
+          <Field class="form-control" id="floatingPassword" name="password_confirm" type="password"> </Field>
+          <small v-if="errors.password_confirm"> {{errors.password_confirm}} </small>
+          <label v-if="with_label" for="floatingPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Se souvenir de moi
+          </label>
+        </div>
+        <Button :onClick='handleSubmit' title="Inscription" type="submit" class="w-50 btn btn-lg btn-primary">Inscription</Button>
+      </Formik>
+    </main>
   </div>
 </template>
 
@@ -26,7 +47,7 @@
   import axios from 'axios'
 
   const instance = axios.create({
-    baseURL: 'https://localhost/api/',
+    baseURL: 'http://localhost:81/api/',
     timeout: 1000,
     headers: {
       'accept': 'application/ld+json',
