@@ -12,9 +12,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 
 #[ApiResource(
-    
+    itemOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Offer:collection','read:Offer:item']]
+        ],
+        'post' => [
+            'denormalization_context' => ['groups' => ['write:Offer:item']]
+        ],
+        'put' => [
+            'denormalization_context' => ['groups' => ['put:Offer:item']]
+        ]
+        ],
+    collectionOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Offer:collection']]
+        ],
+    ]
 )]
-
 class Offer
 {
     /**
@@ -22,17 +36,23 @@ class Offer
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection'])]
     private $proposer;
 
     /**
      * @ORM\OneToMany(targetEntity=Exchange::class, mappedBy="offer")
      */
+    #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection'])]
     private $exchanges;
 
     public function __construct()
@@ -40,16 +60,21 @@ class Offer
         $this->exchanges = new ArrayCollection();
     }
 
+    #[Groups(['read:Offer:collection'])]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection'])]
     public function getProposer(): ?User
     {
         return $this->proposer;
     }
 
+    #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection'])]
     public function setProposer(?User $proposer): self
     {
         $this->proposer = $proposer;
