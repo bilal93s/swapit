@@ -1,24 +1,28 @@
 <template>
     <div class="navbar-ctn">
-        <div class="logo">
-            <img src="../../assets/images/logo.svg" width="60" height="30">
-            <img src="../../assets/images/logo-text.svg" width="60" height="30">
-        </div>
-        <SearchInput v-model="searchQuery" @input="resultQuery" :enableSuggestion="!home"></SearchInput>
-        <div class="picto-ctn">
-            <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
-            <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
-            <img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20">
-            <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
-            <router-link to="/signup">Inscription</router-link>
-        </div>
-        <b-container>
-        <div v-if="home">
-            <div v-if="resources">
-                        <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+        <div class="navbar_content">
+            <div class="logo">
+                <img src="../../assets/images/logo.svg" width="60" height="30">
+                <img src="../../assets/images/logo-text.svg" width="60" height="30">
+            </div>
+            <SearchInput v-model="searchQuery" @input="resultQuery" :enableSuggestion="!home"></SearchInput>
+            <div class="picto-ctn">
+                <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
+                <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
+                <img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20">
+                <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
+                <router-link to="/signup">Inscription</router-link>
             </div>
         </div>
-    </b-container>
+        <div class="result-search">
+            <b-container>
+                <div v-if="home">
+                    <div v-if="resources">
+                        <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+                    </div>
+                </div>
+            </b-container>
+        </div>
     </div>
 </template>
 
@@ -81,9 +85,12 @@
     display: flex;
     height: auto;
     background-color: white;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     padding: 10px 20px;
+}
+.navbar_content{
+    display: flex;
+    justify-content: space-between;
 }
 .picto-ctn{
     display: flex;
