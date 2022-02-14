@@ -11,9 +11,7 @@ use ApiPlatform\Core\OpenApi\Model;
 
 final class JwtDecorator implements OpenApiFactoryInterface
 {
-    public function __construct(
-        private OpenApiFactoryInterface $decorated
-    ) {}
+    public function __construct( private OpenApiFactoryInterface $decorated) {}
 
     public function __invoke(array $context = []): OpenApi
     {
@@ -29,13 +27,6 @@ final class JwtDecorator implements OpenApiFactoryInterface
                 ],
             ],
         ]);
-
-        $schemas['bearerAuth'] = new \ArrayObject([
-            'type' => 'http',
-            'schema' => 'bearer',
-            'bearerFormat'=> 'JWT'
-        ]);
-
         $schemas['Credentials'] = new \ArrayObject([
             'type' => 'object',
             'properties' => [

@@ -2,151 +2,74 @@
 
 namespace App\Entity;
 
-use App\Repository\ExchangeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
+use App\Repository\ExchangeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ExchangeRepository::class)
- */
-
-#[ApiResource(
-    itemOperations: [
-        'get' => [
-            'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item']]
-        ],
-        'patch' => [
-            'denormalization_context' => ['groups' => ['patch:Exchange:item']]
-        ]
-        ],
-    collectionOperations: [
-        'get' => [
-            'normalisation_context' => ['groups' => ['read:Exchange:collection']]
-        ],
-        'post' => [
-            'denormalization_context' => ['groups' => ['write:Exchange:item']]
-        ]
-    ]
-)]
+#[ORM\Entity(repositoryClass: ExchangeRepository::class)]
+// #[ApiResource(mercure: true,
+//     itemOperations: [
+//         'get' => [
+//             'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item']]
+//         ],
+//         'patch' => [
+//             'denormalization_context' => ['groups' => ['patch:Exchange:item']]
+//         ]
+//         ],
+//     collectionOperations: [
+//         'get' => [
+//             'normalisation_context' => ['groups' => ['read:Exchange:collection']]
+//         ],
+//         'post' => [
+//             'denormalization_context' => ['groups' => ['write:Exchange:item']]
+//         ]
+//     ]
+// )]
 #[ApiFilter(PropertyFilter::class)]
 class Exchange
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     #[Groups(['read:Exchange:collection'])]
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="exchanges")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'receivedExchanges')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Groups(['write:Exchange:item','read:Exchange:collection'])]
-    private $offer;
+    private $owner;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="exchanges")
-     */
-    #[Groups(['read:Exchange:collection','write:Exchange:item'])]
-    private $UserOwner;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="propositions")
-     */
-    #[Groups(['read:Exchange:collection','write:Exchange:item'])]
-    private $userProposer;
-
-    /**
-     *@ORM\Column(type="string", length=180)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['write:Exchange:item','read:Exchange:collection'])]
-    private $game;
+    private $proposerGame;
 
-    /**
-     * @ORM\Column(type="string", length=180)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(['write:Exchange:item','read:Exchange:collection'])]
-    private $ownerGame;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    #[Groups(['write:Exchange:item','read:Exchange:collection','patch:Exchange:item'])]
     private $confirmed;
 
-    public function __construct()
-    {
-        $this->userOwner = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sendExchanges')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['write:Exchange:item','read:Exchange:collection'])]
+    private $proposer;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOffer(): ?Offer
+    public function getOwner(): ?User
     {
-        return $this->offer;
+        return $this->owner;
     }
 
-    public function setOffer(?Offer $offer): self
+    public function setOwner(?User $owner): self
     {
-        $this->offer = $offer;
+        $this->owner = $owner;
 
         return $this;
     }
 
-    public function getUserOwner(): ?User
-    {
-        return $this->UserOwner;
-    }
-
-    public function setUserOwner(?User $UserOwner): self
-    {
-        $this->UserOwner = $UserOwner;
-
-        return $this;
-    }
-
-    public function getUserProposer(): ?User
-    {
-        return $this->userProposer;
-    }
-
-    public function setUserProposer(?User $userProposer): self
-    {
-        $this->userProposer = $userProposer;
-
-        return $this;
-    }
-
-    public function getGame(): ?string
-    {
-        return $this->game;
-    }
-
-    public function setGame(string $game): self
-    {
-        $this->game = $game;
-
-        return $this;
-    }
-
-    public function getOwnerGame(): ?string
-    {
-        return $this->ownerGame;
-    }
-
-    public function setOwnerGame(string $ownerGame): self
-    {
-        $this->ownerGame = $ownerGame;
-
-        return $this;
-    }
 
     public function getConfirmed(): ?bool
     {
@@ -160,4 +83,15 @@ class Exchange
         return $this;
     }
 
+    public function getProposer(): ?User
+    {
+        return $this->proposer;
+    }
+
+    public function setProposer(?User $proposer): self
+    {
+        $this->proposer = $proposer;
+
+        return $this;
+    }
 }
