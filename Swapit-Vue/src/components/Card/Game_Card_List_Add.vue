@@ -1,6 +1,6 @@
 <template>
   <div class="game_card_list" v-if="games">
-    <div class="" v-for="(game,key) in games" id="OwnList" :key="key">
+    <div class="game_card_container" v-for="(game,key) in games" id="OwnList" :key="key">
       <GameCard :game="game" />
       <a v-if="!added(game.id)" @click="add(game)" title="arrow icons" class="my-icon">
         <img class="icon"
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import GameCard from './Game_Card.vue';
+import GameCard from '../Exchange/Game_Card.vue';
 export default {
    components: {
       GameCard,
@@ -41,7 +41,12 @@ export default {
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 100%;
+  width: 50%;
+  height: 200px;
+  overflow-y: scroll;
+  box-shadow: lightgray 0px 15px 10px 1px;
+  border-radius: 2rem;
+  padding: 2rem;
 }
 .icon-wrapper {
   margin: auto;
@@ -50,5 +55,9 @@ export default {
 .icon {
     width: 2rem;
     height: 2rem;
+}
+.game_card_container {
+  display: flex;
+  margin-bottom: 1rem;
 }
 </style>

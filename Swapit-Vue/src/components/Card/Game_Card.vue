@@ -31,9 +31,10 @@ export default {
 .game_card{
   margin: auto;
   display: flex;
+  flex-direction: column;
   background-color: rgba(41, 100, 124, 0.2);
-  width: 15rem;
-  height: 4rem;
+  width: 8rem;
+  height: 18rem;
   overflow: hidden;
   border-radius: 1rem;
 }
@@ -41,7 +42,7 @@ export default {
   margin: auto;
 }
 .icon {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto
 }
 </style>

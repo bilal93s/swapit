@@ -1,9 +1,20 @@
 <template>
-  <div id="Game_Exchange" class="gameExchange">
-    <GamesToExchange  :games="gamesToExchange"/>
-    <GamesWishExchange  :games="gamesWish"/>
-    <GameCardExchange v-if="gameWishSelected || gameToExchangeSelected" :gameToExchange="gameToExchangeSelected" :gameWish="gameWishSelected"/>
-    <Button title="Confirmer" :onClick="HandleSubmit" />
+  <div id="Game_Exchange" class="exchange_container">
+    <div class="gameExchange">
+      <div class="to_exchange user_game_container">
+        <div>Jeux Possedés</div>
+        <GamesToExchange  :games="gamesToExchange"/>
+      </div>
+      <div class="wish_exchange user_game_container">
+        <div>Jeux souhaités</div>
+        <GamesWishExchange  :games="gamesWish"/>
+      </div>
+    </div>
+    <div class="recap_exchange">
+      <div>L'échange</div>
+      <GameCardExchange v-if="gameWishSelected || gameToExchangeSelected" :gameToExchange="gameToExchangeSelected" :gameWish="gameWishSelected"/>
+    </div>
+    <Button class="btn-swap" title="Swaper" :onClick="HandleSubmit" />
   </div>
 </template>
 
@@ -112,15 +123,39 @@
 </script>
 
 <style scoped>
+.exchange_container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem;
+  background-color: lightgray;
+}
 .gameExchange {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
-  align-content: flex-start;
-  width: 100%;
-  height: 100%;
+  justify-content: space-between;
+}
+.user_game_container{
+  background-color: white;
+  width: 50%;
   padding: 2rem;
+  margin: 1rem;
+  border-radius: 2rem;
+}
+.recap_exchange{
+  background-color: white;
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 2rem;
+}
+.btn-swap{
+  background-color: orangered;
+  padding: 1rem;
+  margin: 1rem;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 2rem;
+  color: white;
 }
 </style>

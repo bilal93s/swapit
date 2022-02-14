@@ -1,6 +1,6 @@
 <template>
   <div  v-if="this.$props.games" class="game_card_list">
-    <div class="game_card" v-for="(game,key)  in games" id="OwnList" :key="game.title+key">
+    <div class="game_card_container" v-for="(game,key)  in games" id="OwnList" :key="game.title+key">
       <GameCard :game="game" v-bind:class= "gameOwn(key) ? 'own':'not_own'"/>
       <div v-if="!gameIsSelected(game)">
       <a v-if="gameOwn(game.id)" @click="setWishSelected(game)" title="arrow icons" class="my-icon">
@@ -58,5 +58,9 @@ export default {
 .icon {
     width: 2rem;
     height: 2rem;
+}
+.game_card_container {
+  display: flex;
+  margin-bottom: 1rem;
 }
 </style>

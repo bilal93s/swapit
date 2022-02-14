@@ -2,7 +2,7 @@
   <div class="game_card">
     <img src="../../assets/images/acv.png" class="icon">
     <div class="container">
-      <h4><b>{{game.title}}</b></h4>
+      <h4><b>{{game.name}}</b></h4>
       <p>{{game.description}}</p>
     </div>
   </div>
@@ -31,10 +31,9 @@ export default {
 .game_card{
   margin: auto;
   display: flex;
-  flex-direction: column;
   background-color: rgba(41, 100, 124, 0.2);
-  width: 8rem;
-  height: 18rem;
+  width: 20rem;
+  height: 4rem;
   overflow: hidden;
   border-radius: 1rem;
 }
@@ -42,7 +41,7 @@ export default {
   margin: auto;
 }
 .icon {
-    width: 100%;
-    height: auto
+    width: auto;
+    height: 100%;
 }
 </style>

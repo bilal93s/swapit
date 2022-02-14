@@ -1,10 +1,16 @@
 <template>
-  <div id="Game_Search" class="gameSearch">
-    <input v-model="searchQuery" @input="resultQuery">
-    <GameCardListAdd v-show="searchQuery" :games="resources"/>
-    <GameCardListOwn v-show="my_games" :games="my_games"/>
-    <Button title="Confirmer" :onClick="HandleSubmit" />
-    <Button title="vider" :onClick="clearList" />
+  <div class="gameSearch-container">
+    <div id="Game_Search" class="gameSearch">
+      <input class="search-input" v-model="searchQuery" @input="resultQuery">
+      <GameCardListAdd v-show="searchQuery" :games="resources"/>
+    </div>
+    <div class="game-list-added">
+      <GameCardListOwn v-show="my_games" :games="my_games"/>
+      <div class="button-container">
+        <Button class="valider" title="Valider" :onClick="HandleSubmit" />
+        <Button class="vider" title="vider" :onClick="clearList" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,7 +71,7 @@
         resultQuery() {
           console.info(this.$data.searchQuery)
           if (this.searchQuery) {
-             fetch(`https://localhost/api/games.jsonld?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
+             fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
               // console.info(data[0][])
             this.$data.resources = data;
             // fetch(`https://localhost/api/games?name=${this.searchQuery}.json`).then(data => {
@@ -100,5 +106,44 @@
   height: 100%;
   background-color: #fafafa;
   padding: 2rem;
+}
+.game-list-added{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.button-container{
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+}
+.valider{
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  font-weight: bold;
+  background-color: rgba(0, 119, 128, 0.781);
+  color: white;
+  width: 60%;
+  border-radius: 1rem;
+}
+.valider:hover{
+  background-color: rgb(0, 119, 128);
+  transition: background-color 0.25s ease;
+}
+.vider{
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: rgba(252, 101, 0, 0.685);
+  color: white;
+  width: 30%;
+  border-radius: 1rem;
+}
+.vider:hover{
+  background-color: rgb(252, 101, 0);
+  transition: background-color 0.25s ease;
 }
 </style>
