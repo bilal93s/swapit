@@ -20,6 +20,15 @@
                     </div>
                 </div>
             </div>
+        
+            <div class="picto-ctn">
+                <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
+                <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
+                <router-link to="/subscription"><img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20"></router-link>
+                <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
+                <router-link to="/signup"><img class="picto-nav" src="../../assets/images/id.png" width="35" height="35"></router-link>
+                <button v-on:click="logout" class="w-50 btn btn-lg btn-primary"><img class="picto-nav" src="../../assets/images/logout.svg" width="25" height="25"></button>
+            </div>
         </div>
         <div class="sidebar">
             <b-button v-b-toggle.sidebar-1>Recherche avancée</b-button>    
@@ -45,14 +54,7 @@
             </div>
             </b-sidebar>
         </div>
-        <div class="picto-ctn">
-            <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
-            <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
-            <img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20">
-            <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
-            <router-link to="/signup"><img class="picto-nav" src="../../assets/images/id.png" width="35" height="35"></router-link>
-            <button v-on:click="logout" class="w-50 btn btn-lg btn-primary"><img class="picto-nav" src="../../assets/images/logout.svg" width="25" height="25"></button>
-        </div>
+        
         <div v-if="home">
             <div v-if="resources">
                 <GameLayer v-for="(game,key) in resources" :key="game.id+key" :game="game"/>

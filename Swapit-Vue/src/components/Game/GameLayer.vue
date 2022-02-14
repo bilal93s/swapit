@@ -2,7 +2,7 @@
     <div class="container-game-layer">
         <div class="game-layer">
             <div class="game-img">
-                    <img src="../../assets/images/acv.png" width="80" height="80">
+                    <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co1tmu.png" width="80" height="80">
             </div>
             <div class="info-game">
                 <div class="title-game">{{game.name}}</div>
@@ -32,7 +32,7 @@
 
 <style scoped>
 .container-game-layer {
-    background-image: url("https://cdn1.epicgames.com/400347196e674de89c23cc2a7f2121db/offer/AC%20KINGDOM%20PREORDER_STANDARD%20EDITION_EPIC_Key_Art_Portrait_640x854-640x854-288120c5573756cb988b6c1968cebd86.png");
+    background-image: url("https://images.igdb.com/igdb/image/upload/t_1080p/co1tmu.png");
     background-repeat: no-repeat;
 	background-size: cover;
     background-position: center;
