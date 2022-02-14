@@ -1,21 +1,17 @@
 <template>
     <b-container>
-        <Sidebar/>
         <input v-model="searchQuery" @input="resultQuery">
         <div v-if="resources">
             <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
         </div>
-        <!-- <GameCard/> -->
     </b-container>
 </template>
 
 <script>
-import Sidebar from "../components/Filter/SideBar.vue";
 import Game from "../components/Game/GameLayer.vue";
 
 export default {
     components: {
-        Sidebar,
         Game
     },
     props: {

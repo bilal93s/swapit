@@ -135,8 +135,6 @@
             }).catch(err => {
                 console.error(err)
             })          
-        } else {
-            this.$data.resources = []
         }
       },
       generateCategories() {
@@ -220,13 +218,10 @@
     display: flex;
     height: auto;
     background-color: white;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     flex-wrap: wrap;
-}
-.navbar_content{
-    display: flex;
-    justify-content: space-between;
 }
 .picto-ctn{
     display: flex;
@@ -334,13 +329,6 @@
     width: 60px;
     border-radius: 50%;
     background-color: teal;
-}
-
-.result_container{
-    position: absolute;
-    background: white;
-    overflow-y: scroll;
-    padding: 2rem;
 }
 
 </style>

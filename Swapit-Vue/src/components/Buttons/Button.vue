@@ -11,8 +11,8 @@ export default {
     title: String,
     shape: {
       type: String,
-      default: "rounded",
-      validator: (val) => ["squared", "rounded",].includes(val),
+      default: "",
+      validator: (val) => [].includes(val),
     },
     as: {
       type: String,

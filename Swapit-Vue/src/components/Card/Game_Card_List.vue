@@ -75,6 +75,7 @@ export default {
   align-items: center;
   margin: auto;
   width: 100%;
+  margin: 1rem;
 }
 .icon-wrapper {
   margin: auto;
@@ -83,5 +84,12 @@ export default {
 .icon {
     width: 1rem;
     height: 1rem;
+}
+.game_card{
+  margin:2rem;
+  display: flex;
+}
+.my-icon {
+  position: absolute;
 }
 </style>

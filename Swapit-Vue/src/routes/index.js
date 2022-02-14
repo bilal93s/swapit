@@ -16,9 +16,12 @@ const routes = [
 }, { 
     path: "/owngameslist",
     component: () => import("../views/OwnList.vue")
-    }, { 
+}, { 
     path: "/wishgameslist",
     component: () => import("../views/WishList.vue")
+},{ 
+    path: "/exchange",
+    component: () => import("../views/Exchange.vue")
     },
 ];
 
