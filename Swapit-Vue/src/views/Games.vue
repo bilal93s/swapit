@@ -3,7 +3,7 @@
         <Sidebar/>
         <input v-model="searchQuery" @input="resultQuery">
         <div v-if="resources">
-                    <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+            <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
         </div>
         <!-- <GameCard/> -->
     </b-container>

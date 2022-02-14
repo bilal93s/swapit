@@ -1,16 +1,27 @@
 <template>
-  <div class="body-container">
-    <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
-      <Field id="email" name="email" type="email" :with_label="with_label" :error="errors.email"/>
-      <label v-if="with_label"><span>Email</span></label>
-      <small v-if="errors.email"> {{errors.email}} </small>
-      <Field id='password' name="password" type="password" :with_label="with_label" placeholder="toto" :error="errors.password"/>
-      <label v-if="with_label"><span>Mot de Passe</span></label>
-      <small v-if="errors.password"> {{errors.password}} </small>
-      <Field name="remenberme" type="checkbox"/>
-      <label v-if="with_label"><span>Se souvenir de moi</span></label>
-      <Button :onClick='handleSubmit' type="submit" title="Connexion"> </Button>
-    </Formik>
+  <div class="">
+    <main class="form-signin">
+      <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
+        <h1 class="h3 mb-3 fw-normal">Connexion</h1>
+
+        <div class="form-floating">
+          <Field type="email" class="form-control" id="floatingInput email" placeholder="name@example.com" name="email" :with_label="with_label" :error="errors.email"/>
+          <small v-if="errors.email"> {{errors.email}} </small>
+          <label for="floatingInput">Adresse email</label>
+        </div>
+        <div class="form-floating">
+          <Field class="form-control" id='password floatingPassword' name="password" type="password" :with_label="with_label" placeholder="toto" :error="errors.password"/>
+          <label for="floatingPassword">Mot de passe</label>
+        </div>
+        
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Se souvenir de moi
+          </label>
+        </div>
+        <Button :onClick='handleSubmit' title="Connexion" type="submit" class="w-50 btn btn-lg btn-primary">Connexion</Button>
+      </Formik>
+    </main>
   </div>
 </template>
 
@@ -27,15 +38,28 @@
       Field,
       Button,
     },
+    // data: function () {  
+    //   return {
+    //     connexion_failed: false
+    //   }
+    // },
     computed:{
       validator:()=>validator,
     },
     methods: {
-      onSubmit:(data)=> {
-        axios.get('https://localhost/api/users')
+      onSubmit:(data) => {
+        axios.get('http://localhost:81/api/users')
         .then(function (response) {
-          console.log(data);
-          console.log(response);
+          console.log(data.email);
+          for (var i=0; i<=response.data['hydra:member'].length ; i++) {
+            if(data.email == response.data['hydra:member'][i]['email'] && data.password == response.data['hydra:member'][i]['password']){
+              localStorage.setItem('username', response.data['hydra:member'][i]['username']);
+              this.$router.push('/games');
+            }
+            else{
+              // this.$data.connexion_failed = true
+            }
+          }
         })
         .catch(function (error) {
           console.log(error);
@@ -46,8 +70,21 @@
   };
 </script>
 
+
 <style scoped>
   .body-container {
     margin-top: 30px;
+  }
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
   }
 </style>

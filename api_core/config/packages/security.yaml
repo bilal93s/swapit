@@ -13,9 +13,9 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-        jwt:
-            lexik_jwt:
-                class: App\Entity\User
+        # jwt:
+        #     lexik_jwt:
+        #         class: App\Entity\User
 
     firewalls:
         dev:
@@ -33,11 +33,27 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             jwt: ~
+        exchanges:
+            pattern: ^/api/exchanges
+            stateless: true
+            lazy: true
+            methods: [PUT,PATCH, DELETE]
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        offers:
+            pattern: ^/api/offers
+            stateless: true
+            lazy: true
+            methods: [PUT, PATCH, DELETE]
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
         api:
             pattern: ^/api
             stateless: true
             lazy: true
-            provider: jwt
+            provider: app_user_provider
             jwt: ~
 
 
@@ -45,7 +61,7 @@ security:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         # - { path: ^/login, roles: ROLE_ADMIN }
         - { path: ^/api/users, roles: PUBLIC_ACCESS }
-        - { path: ^/api/offer, roles: PUBLIC_ACCESS }
+        - { path: ^/api/offers, roles: PUBLIC_ACCESS }
         - { path: ^/api/exchange, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/admin, roles: ROLE_ADMIN }

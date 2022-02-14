@@ -13,27 +13,11 @@ import SearchFilter from "./SearchFilter.vue";
     components: {
     SearchFilter
     },
-    // provide:() => { Igdb:{
-    //     getGenres: () => {
-    //         fetch("https://localhost/genres")
-    //         .then(response => { return response })
-    //     }
-
-    //     getPlatform: () => {
-    //         fetch("https://localhost/platforms")
-    //         .then(response => { return response })
-    //     }
-
-    //     getMode: () => {
-    //         fetch("https://localhost/modes")
-    //         .then(response => { return response })
-    //     }
-
-    //     getCompany: () => {
-    //         fetch("https://localhost/companies")
-    //         .then(response => { return response })
-    //     }}
-    // }
+//  provide() {
+//         return {
+//         filtersSelected: this.filtersSelected,
+//         UpdateFilters: this.UpdateFilters,
+//         }}
 }
 </script>
 

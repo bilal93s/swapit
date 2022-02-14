@@ -14,9 +14,9 @@ const routes = [
     path: "/games",
     component: () => import("../views/Games.vue")
 }, { 
-path: "/owngameslist",
-component: () => import("../views/OwnList.vue")
-}, { 
+    path: "/owngameslist",
+    component: () => import("../views/OwnList.vue")
+    }, { 
     path: "/wishgameslist",
     component: () => import("../views/WishList.vue")
     },
