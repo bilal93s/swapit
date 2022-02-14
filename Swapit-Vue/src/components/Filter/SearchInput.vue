@@ -11,14 +11,6 @@
     name: "SearchInput",
     data: () => ({
       searchQuery: null,
-      resources: [
-        { id: 1, title: "javascript for dummies" },
-        { id: 2, title: "vue for dummies" },
-        { id: 3, title: "dos for dummies" },
-        { id: 4, title: "windows for dummies" },
-        { id: 5, title: "html for dummies" }
-      ],
-      list: [],
       filter: false,
     }),
     computed: { 

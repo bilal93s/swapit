@@ -11,6 +11,7 @@
   export default {
     components: {
       Filtre,
+      // Toggle
     },
     name: "Filtres",
     // props:{
@@ -23,12 +24,13 @@
         platforms: [],
         modes: [],
     },
+    
       mobile: false,
     }),
     async created () {
 
       fetch("https://localhost/api/genres.json?properties%5B%5D=name").then(response => response.json()).then(data => {
-            console.info(data.members)
+            // console.info(data.members)
          this.$data.filters.genres = data;
           
         }).catch(err => {
@@ -49,6 +51,11 @@
           console.error(err)
         }) 
   },
+  provide() {
+        return {
+        filtersSelected: this.filtersSelected,
+        UpdateFilters: this.UpdateFilters,
+        }}
   };
 </script>
 

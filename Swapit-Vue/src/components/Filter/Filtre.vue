@@ -3,26 +3,62 @@
     <slot>
       <h1>{{title}}</h1>
     </slot>
-      <div v-for="(value,k) in resource" :key="k" active-class="active" tag="button" exact class="side-btn">
-        <div class="link-container">
-          <input type="checkbox" id="scales" name="scales" checked>
+    <Toggle>
+      <li v-for="(value,key) in resource" :key="key" active-class="active" tag="button" exact class="side-btn">
+        <div class="link-container" @change="UpdateFilter">
+          <input type="checkbox" :id="key" name="scales" :value="value.name" checked="false">
           <label for="scales" class ="filter_value">{{value.name}}</label>
         </div>
-      </div>
+      </li>
+    </Toggle>
   </div>
 </template>
 
 <script>
+  import Toggle from "../Toggle/Toggle.vue";
+
   export default {
     name: "Filtre",
+      components: {
+      Toggle,
+    },
     props:{
       title: String,
-      resource: Array
+      resource: Array,
+      
     },
+    inject: ['UpdateFilters','filtersSelected'],
     data: () => ({
       searchQuery: null,
       mobile: false,
+      // UpdateFilters: this.UpdateFilters,
+      // filtersSelected: this.filtersSelected,
     }),
+    methods: {
+      UpdateFilter: function(e) {
+        var filters = this.filtersSelected
+              console.log(this.$props.title)
+                console.log(this.filtersSelected)
+                this.UpdateFilters(filters);
+              console.log(this.filtersSelected)
+       if(!filters?.[this.$props.title]){
+          filters.push = [this.$props.title] [[e.target.value]]
+        } else if(filters?.[this.$props.title].includes(e.target.value)) {
+                  console.log('test1')
+
+                  console.log(e.target.checked)
+
+         filters[this.$props.title].splice(filters[this.$props.title].indexOf(e.target.value), 1);
+        } else {
+                  console.log(e.target.checked)
+
+          filters[this.$props.title].push(e.target.value);
+        }
+              console.log('test3')
+        this.UpdateFilters(filters);
+      }
+    },
+    
   };
 </script>
 
