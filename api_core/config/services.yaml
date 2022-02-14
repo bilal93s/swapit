@@ -28,14 +28,14 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
 
-    App\lib\IgdbBundle\IgdbWrapper\TwitchWrapper:
-        arguments: 
-            - client: '%env(IGDB_CLIENT)%'
-            - secret: '%env(TWITCH_SECRET)%'
-            - grant_type: '%env(TWITCH_GRANT_TYPE)%'
-            - url: '%env(TWITCH_AUTH_URL)%'
+    # App\lib\IgdbBundle\IgdbWrapper\TwitchWrapper:
+    #     arguments: 
+    #         - client: '%env(IGDB_CLIENT)%'
+    #         - secret: '%env(TWITCH_SECRET)%'
+    #         - grant_type: '%env(TWITCH_GRANT_TYPE)%'
+    #         - url: '%env(TWITCH_AUTH_URL)%'
 
-    App\lib\IgdbBundle\IgdbWrapper\IgdbWrapper:
-        arguments: 
-            - client: '%env(IGDB_CLIENT)%'
-            - url: '%env(IGDB_BASE_URL)%'
+    # App\lib\IgdbBundle\IgdbWrapper\IgdbWrapper:
+    #     arguments: 
+    #         - client: '%env(IGDB_CLIENT)%'
+    #         - url: '%env(IGDB_BASE_URL)%'
