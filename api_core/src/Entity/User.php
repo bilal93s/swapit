@@ -12,33 +12,31 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-// #[ApiResource(
-//     itemOperations: [
-//         'get' => [
-//             'controller' => NotFoundAction::class,
-//             'read' => false,  
-//             'output' => false      ]
-//     ],
-//     'me': [
-//        'pagination_enabled' => false,
-//        'path' => '/me'
-//         'method' => 'get',
-//         'controller' => MeController::class,
-//         'read' => false,
-//         'openapi_context' => [
-//             'security' => [['bearerAuth' => []]]
-//         ]
-//     ]
-// )]
-
 #[ApiResource(
-    
+    itemOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:User:collection','read:User:item']]
+        ],
+        'patch' => [
+            'denormalization_context' => ['groups' => ['patch:User:item']]
+        ]
+        ],
+    collectionOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:User:collection']]
+        ],
+        'post' => [
+            'denormalization_context' => ['groups' => ['write:User:collection']]
+        ],
+    ]
 )]
-
+#[ApiFilter(PropertyFilter::class)]
 class User implements JWTUserInterface
 {
     /**
@@ -52,6 +50,7 @@ class User implements JWTUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
+    #[Assert\NotBlank]
     #[Groups(['read:User:item','write:User:item'])]
     private $username;
 
@@ -59,6 +58,7 @@ class User implements JWTUserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Email()
      */
+    #[Assert\NotBlank]
     #[Groups(['read:User:item','write:User:item'])]
     private $email;
 
@@ -73,7 +73,8 @@ class User implements JWTUserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    #[Groups(['write:User:item'])]
+    #[Assert\NotBlank]
+    #[Groups(['write:User:item','read:User:item','patch:User:item'])]
     private $password;
 
     public function __construct()
@@ -135,9 +136,9 @@ class User implements JWTUserInterface
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password, UserPasswordEncoderInterface $encoder): self
     {
-        $this->password = $password;
+        $this->password = $this->encoder->encodePassword($this, $password);
 
         return $this;
     }

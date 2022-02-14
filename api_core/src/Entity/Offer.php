@@ -5,7 +5,11 @@ namespace App\Entity;
 use App\Repository\OfferRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+
 
 /**
  * @ORM\Entity(repositoryClass=OfferRepository::class)
@@ -16,19 +20,20 @@ use Doctrine\ORM\Mapping as ORM;
         'get' => [
             'normalisation_context' => ['groups' => ['read:Offer:collection','read:Offer:item']]
         ],
-        'post' => [
-            'denormalization_context' => ['groups' => ['write:Offer:item']]
-        ],
-        'put' => [
-            'denormalization_context' => ['groups' => ['put:Offer:item']]
+        'patch' => [
+            'denormalization_context' => ['groups' => ['patch:Offer:item']]
         ]
         ],
     collectionOperations: [
         'get' => [
             'normalisation_context' => ['groups' => ['read:Offer:collection']]
         ],
+        'post' => [
+            'denormalization_context' => ['groups' => ['write:Offer:item']]
+        ],
     ]
 )]
+#[ApiFilter(PropertyFilter::class)]
 class Offer
 {
     /**
@@ -36,23 +41,20 @@ class Offer
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    #[Groups(['read:Offer:collection'])]
-    #[Groups(['write:Offer:collection'])]
+    #[Groups(['write:Offer:collection','read:Offer:collection'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['read:Offer:collection'])]
-    #[Groups(['write:Offer:collection'])]
+    #[Groups(['write:Offer:collection','read:Offer:collection'])]
     private $proposer;
 
     /**
      * @ORM\OneToMany(targetEntity=Exchange::class, mappedBy="offer")
      */
-    #[Groups(['read:Offer:collection'])]
-    #[Groups(['write:Offer:collection'])]
+    #[Groups(['write:Offer:collection','read:Offer:collection'])]
     private $exchanges;
 
     public function __construct()
@@ -66,15 +68,15 @@ class Offer
         return $this->id;
     }
 
-    #[Groups(['read:Offer:collection'])]
-    #[Groups(['write:Offer:collection'])]
+    // #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection','read:Offer:collection'])]
     public function getProposer(): ?User
     {
         return $this->proposer;
     }
 
-    #[Groups(['read:Offer:collection'])]
-    #[Groups(['write:Offer:collection'])]
+    // #[Groups(['read:Offer:collection'])]
+    #[Groups(['write:Offer:collection','read:Offer:collection'])]
     public function setProposer(?User $proposer): self
     {
         $this->proposer = $proposer;
