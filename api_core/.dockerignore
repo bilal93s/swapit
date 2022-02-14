@@ -24,6 +24,6 @@ bin/*
 build/
 docker/db/data/
 helm/
-# public/bundles/
+public/bundles/
 var/
 vendor/
