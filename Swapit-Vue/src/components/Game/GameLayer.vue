@@ -48,6 +48,7 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     padding: 20px;
+    width: 100%;
 }
 .game-img{
     width: auto;
@@ -68,14 +69,15 @@
     font-weight: bold;
 }
 .title-game{
-    font-size: 40px;
+    font-size: 27px;
     color: rgba(255, 93, 25, 1);
     margin-bottom: 20px;
 }
 .game-desc{
     width: 50%;
-    height: 100%;
     font-size: 12px;
     color: rgba(41, 100, 124);
+    height: 90px;
+    overflow: hidden;
 }
 </style>

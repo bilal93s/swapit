@@ -5,7 +5,18 @@
                 <img src="../../assets/images/logo.svg" width="60" height="30">
                 <img src="../../assets/images/logo-text.svg" width="60" height="30">
             </div>
-            <SearchInput v-model="searchQuery" @input="resultQuery" :enableSuggestion="!home"></SearchInput>
+            <div id="SearchInput">
+                <input class="search-input" v-model="searchQuery" @input="refreshRessource">
+                <div v-if="!home">
+                    <div v-if="resources">
+                        <div class="result_container">
+                            <div v-show ="searchQuery" v-for="(game,key) in resources" :key="game.name+key">
+                                {{game.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="picto-ctn">
                 <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
                 <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
@@ -14,25 +25,25 @@
                 <router-link to="/signup">Inscription</router-link>
             </div>
         </div>
-        <div class="result-search">
-            <b-container>
-                <div v-if="home">
-                    <div v-if="resources">
-                        <Game v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+        <div class="result_search">
+            <div v-if="home">
+                <div v-if="resources">
+                    <div>
+                        <GameLayer v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
                     </div>
                 </div>
-            </b-container>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import SearchInput from "./SearchInput.vue";
-    import Game from "../Game/GameLayer.vue";
+    // import SearchInput from "./SearchInput.vue";
+      import GameLayer from "../Game/GameLayer.vue";
     export default {
         components: {
-            SearchInput,
-            Game
+            // SearchInput,
+              GameLayer
         },
     props: {
         query: {
@@ -54,25 +65,31 @@
     }),
     created() {
         if(this.$props.home){
-            this.resultQuery()
+            this.refreshRessource()
         }
     },
     methods:{
-         resultQuery() {
-          if (this.searchQuery) {
+         refreshRessource() {
+          if (this.$data.searchQuery) {
+              console.log('toto')
+
+
              fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
             this.$data.resources = data;
             
             }).catch(err => {
                 console.error(err)
             })
-        } else {
+        } else if (this.$data.home){
+             console.log('toto1')
             fetch(`https://localhost/api/games.json?popular`).then(response => response.json()).then(data => {
             this.$data.resources = data;
         
             }).catch(err => {
                 console.error(err)
             })          
+        } else {
+            this.$data.resources = []
         }
       },
     }
@@ -98,6 +115,26 @@
 }
 .picto-nav{
     margin-left: 10px;
+}
+
+.search-input{
+  background-color: rgba(41, 100, 124, 0.2);
+  color: rgba(41, 100, 124);
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+  height: 15px;
+  padding: 5px;
+}
+.search-input:focus{
+  outline: rgba(41, 100, 124) 2px solid;
+}
+
+.result_container{
+    position: absolute;
+    background: white;
+    overflow-y: scroll;
+    padding: 2rem;
 }
 
 </style>

@@ -12,9 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 
 #[ApiResource(
-    
+    itemOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item']]
+        ],
+        'post' => [
+            'denormalization_context' => ['groups' => ['write:Exchange:item']]
+        ],
+        'put' => [
+            'denormalization_context' => ['groups' => ['put:Exchange:item']]
+        ]
+        ],
+    collectionOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Exchange:collection']]
+        ],
+    ]
 )]
-
+#[ApiFilter(PropertyFilter::class)]
 class Exchange
 {
     /**
@@ -22,36 +37,50 @@ class Exchange
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read:Exchange:collection'])]
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Offer::class, inversedBy="exchanges")
      */
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $offer;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="exchanges")
      */
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $UserOwner;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="propositions")
      */
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $userProposer;
 
     /**
      *@ORM\Column(type="string", length=180)
      */
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $game;
 
     /**
      * @ORM\Column(type="string", length=180)
      */
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $ownerGame;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
+    #[Groups(['put:Offer:collection'])]
+    #[Groups(['read:Exchange:collection'])]
+    #[Groups(['write:Exchange:item'])]
     private $confirmed;
 
     public function __construct()
