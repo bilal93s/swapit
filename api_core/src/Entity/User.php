@@ -109,12 +109,9 @@ class User extends JWTUser implements PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password, UserPasswordHasherInterface $passwordHasher): self
+    public function setPassword(string $password): self
     {
-        $this->password = $passwordHasher->hashPassword(
-            $this,
-            $password
-        );
+        $this->password = $password;
 
         return $this;
     }

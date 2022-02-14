@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExchangeRepository::class)]
-// #[ApiResource(mercure: true,
+#[ApiResource(mercure: true,
 //     itemOperations: [
 //         'get' => [
 //             'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item']]
@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 //             'denormalization_context' => ['groups' => ['write:Exchange:item']]
 //         ]
 //     ]
-// )]
+)]
 #[ApiFilter(PropertyFilter::class)]
 class Exchange
 {
