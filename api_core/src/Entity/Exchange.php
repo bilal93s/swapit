@@ -6,25 +6,26 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ExchangeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+
 
 #[ORM\Entity(repositoryClass: ExchangeRepository::class)]
 #[ApiResource(mercure: true,
-//     itemOperations: [
-//         'get' => [
-//             'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item']]
-//         ],
-//         'patch' => [
-//             'denormalization_context' => ['groups' => ['patch:Exchange:item']]
-//         ]
-//         ],
-//     collectionOperations: [
-//         'get' => [
-//             'normalisation_context' => ['groups' => ['read:Exchange:collection']]
-//         ],
-//         'post' => [
-//             'denormalization_context' => ['groups' => ['write:Exchange:item']]
-//         ]
-//     ]
+    itemOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Exchange:collection','read:Exchange:item','read:User:collection']]
+        ],
+        'patch' => [
+            'denrmalization_context' => ['groups' => ['patch:Exchange:item']]
+        ] ,
+        'delete'
+        ],
+    collectionOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Exchange:collection']]
+        ],
+        'post'
+    ]
 )]
 #[ApiFilter(PropertyFilter::class)]
 class Exchange
@@ -37,6 +38,7 @@ class Exchange
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'receivedExchanges')]
     #[ORM\JoinColumn(nullable: false)]
+    // #[ApiSubresource]
     #[Groups(['write:Exchange:item','read:Exchange:collection'])]
     private $owner;
 
@@ -50,7 +52,9 @@ class Exchange
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'sendExchanges')]
     #[ORM\JoinColumn(nullable: false)]
+    // #[ApiSubresource]
     #[Groups(['write:Exchange:item','read:Exchange:collection'])]
+    
     private $proposer;
 
     public function getId(): ?int

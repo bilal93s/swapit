@@ -12,26 +12,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ApiResource(mercure: true,
-    // itemOperations: [
-    //     'get' => [
-    //         'normalisation_context' => ['groups' => ['read:User:collection','read:User:item']]
-    //     ],
-    //     'patch' => [
-    //         'denormalization_context' => ['groups' => ['patch:User:item']]
-    //     ]
-    //     ],
-    // collectionOperations: [
-    //     'get' => [
-    //         'normalisation_context' => ['groups' => ['read:User:collection']]
-    //     ],
-    //     'post' => [
-    //         'denormalization_context' => ['groups' => ['write:User:collection']]
-    //     ],
-    // ]
+    itemOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:Exchange:collection','read:User:collection','read:User:item']]
+        ],
+        'patch' => [
+            'denormalization_context' => ['groups' => ['patch:User:item']]
+        ],
+        'delete'
+        ],
+    collectionOperations: [
+        'get' => [
+            'normalisation_context' => ['groups' => ['read:User:collection']]
+        ],
+        'post'
+    ]
 )]
 #[ApiFilter(PropertyFilter::class)]
 class User extends JWTUser implements PasswordAuthenticatedUserInterface
@@ -64,10 +64,12 @@ class User extends JWTUser implements PasswordAuthenticatedUserInterface
 
     #[Groups(['read:User:item','patch:User:item'],)]
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Exchange::class, orphanRemoval: true)]
+    #[ApiSubresource]
     private $receivedExchanges;
 
     #[Groups(['read:User:item','patch:User:item'])]
     #[ORM\OneToMany(mappedBy: 'proposer', targetEntity: Exchange::class, orphanRemoval: true)]
+    #[ApiSubresource]
     private $sendExchanges;
 
     #[ORM\Column(type: 'array',nullable: true)]
@@ -112,7 +114,6 @@ class User extends JWTUser implements PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
