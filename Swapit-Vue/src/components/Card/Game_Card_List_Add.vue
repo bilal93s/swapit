@@ -41,7 +41,7 @@ export default {
   justify-content: center;
   align-items: center;
   margin: auto;
-  width: 50%;
+  width: 25%;
   height: 200px;
   overflow-y: scroll;
   box-shadow: lightgray 0px 15px 10px 1px;

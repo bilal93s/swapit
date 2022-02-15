@@ -1,5 +1,5 @@
 <template>
-  <component v-bind:is="as" aria-busy="" v-bind:class="shape" class="button,btn-10" v-on:click="onClick">
+  <component v-bind:is="as" aria-busy="" class="button,btn-10" v-on:click="onClick">
     <span>{{ title }}</span>
   </component>
 </template>
@@ -9,11 +9,6 @@ export default {
   name: "Button",
   props: {
     title: String,
-    shape: {
-      type: String,
-      default: "",
-      validator: (val) => [].includes(val),
-    },
     as: {
       type: String,
       default: "button",

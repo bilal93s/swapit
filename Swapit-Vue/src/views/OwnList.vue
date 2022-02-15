@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>Liste de jeux possedés<p/>
+        <p class="page-name">Liste de jeux possedés<p/>
         <GameSearchInput/>
     </div>
 </template>
@@ -17,5 +17,9 @@ export default {
 </script>
 
 <style scoped>
-
+    .page-name{
+        text-align: center;
+        font-size: 24px;
+        color: rgb(255, 94, 0);
+    }
 </style>

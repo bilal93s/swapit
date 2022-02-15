@@ -27,7 +27,7 @@
                 <router-link to="/subscription"><img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20"></router-link>
                 <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
                 <router-link to="/signup"><img class="picto-nav" src="../../assets/images/id.png" width="35" height="35"></router-link>
-                <button v-on:click="logout" class="w-50 btn btn-lg btn-primary"><img class="picto-nav" src="../../assets/images/logout.svg" width="25" height="25"></button>
+                <button class="logout" v-on:click="logout"><img class="picto-nav" src="../../assets/images/logout.svg" width="20" height="20"></button>
             </div>
         </div>
         <div class="sidebar">
@@ -332,5 +332,13 @@
     border-radius: 50%;
     background-color: teal;
 }
-
+.logout{
+    border: none;
+    background-color: transparent;;
+}
+.logo{
+    display: flex;
+    margin-right: 2rem;
+    margin-left: 1rem;
+}
 </style>
