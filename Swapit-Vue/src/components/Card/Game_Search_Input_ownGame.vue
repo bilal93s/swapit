@@ -76,7 +76,7 @@
         HandleSubmit: function() {
           // this.$emit('submit', this.my_games)
           instance.patch(`/users/${localStorage.getItem('id')}`,{
-            wishGames: this.my_games
+            ownGames: this.my_games
           }).then(function (response) {
             console.log(response);
           })
