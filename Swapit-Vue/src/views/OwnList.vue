@@ -7,7 +7,7 @@
 
 <script>
 
-import GameSearchInput from "../components/Card/Game_Search_Input.vue"
+import GameSearchInput from "../components/Card/Game_Search_Input_ownGame.vue"
 
 export default {
     components: {

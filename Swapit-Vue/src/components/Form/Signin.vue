@@ -48,12 +48,13 @@
     },
     methods: {
       onSubmit:(data) => {
-        axios.get('http://localhost:81/api/users')
+        axios.get('http://localhost:81/users')
         .then(function (response) {
           console.log(data.email);
           for (var i=0; i<=response.data['hydra:member'].length ; i++) {
             if(data.email == response.data['hydra:member'][i]['email'] && data.password == response.data['hydra:member'][i]['password']){
               localStorage.setItem('username', response.data['hydra:member'][i]['username']);
+              localStorage.setItem('id', response.data['hydra:member'][i]['id']);
               this.$router.push('/games');
             }
             else{

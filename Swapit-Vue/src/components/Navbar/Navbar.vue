@@ -56,7 +56,7 @@
         </div>
         
         <div v-if="home">
-            <div v-if="resources">
+            <div class="scroll-overflow" v-if="resources">
                 <GameLayer v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
             </div>
         </div>
@@ -207,6 +207,11 @@
 </script>
 
 <style>
+.scroll-overflow{
+    display: flex;
+    overflow: auto;
+    margin-bottom: 50px;
+}
 .flex-logo{
     display: flex;
     width: 200px;
