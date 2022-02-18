@@ -38,7 +38,8 @@ stages:
 
           - script: |
               cd api_core
-              docker build -f dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE .
+              ls -al
+              docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker ps -a
               docker push $SWP_CADDY_API_CORE_IMAGE
@@ -46,7 +47,7 @@ stages:
 
           - script: |
               cd api_core
-              docker build -f dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PHP_API_CORE_IMAGE
             displayName: "Build Php Api Core Image"
@@ -60,14 +61,14 @@ stages:
           
           - script: |
               cd api_game
-              docker build -f dockerfile --pull --no-cache -t $SWP_CADDY_API_IMAGE .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_IMAGE .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_CADDY_API_IMAGE
             displayName: "Build Caddy Api Image"
 
           - script: |
               cd api_game
-              docker build -f dockerfile --pull --no-cache -t $SWP_PHP_API_IMAGE .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_IMAGE .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PHP_API_IMAGE
             displayName: "Build Php Api Image"
