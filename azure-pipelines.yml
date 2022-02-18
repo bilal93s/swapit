@@ -39,7 +39,7 @@ stages:
           - script: |
               cd api_core
               ls -al
-              docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE --target api_platform_caddy_core .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE --target api_platform_caddy .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker ps -a
               docker push $SWP_CADDY_API_CORE_IMAGE
@@ -47,14 +47,14 @@ stages:
 
           - script: |
               cd api_core
-              docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE --target api_platform_php_core .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE --target api_platform_php .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PHP_API_CORE_IMAGE
             displayName: "Build Php Api Core Image"
 
           - script: |
               cd api_core
-              docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_CORE_IMAGE --target api_platform_pwa_prod_core .
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_CORE_IMAGE --target api_platform_pwa_prod .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PWA_API_CORE_IMAGE
             displayName: "Build Pwa Api Core Image"
