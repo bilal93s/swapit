@@ -12,18 +12,68 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
+  - stage: Build
+    jobs:
+      - job: BuildImages
+        steps:
+          - script: |
+              echo "Set image tags for v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_CADDY_API_IMAGE]$(registry)/$(caddy_api):v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_PHP_API_IMAGE]$(registry)/$(php_api):v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_PWA_API_IMAGE]$(registry)/$(pwa_api):v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_CADDY_API_CORE_IMAGE]$(registry)/$(caddy_api_core):v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_PHP_API_CORE_IMAGE]$(registry)/$(php_api_core):v$(build.buildNumber)"
+              echo "##vso[task.setvariable variable=SWP_PWA_API_CORE_IMAGE]$(registry)/$(pwa_api_core):v$(build.buildNumber)"
+            displayName: "Set image tags"
+
+          - script: |
+              echo "v$(build.buildNumber) variables"
+              echo $SWP_CADDY_API_IMAGE
+              echo $SWP_PWA_API_IMAGE
+              echo $SWP_PHP_API_IMAGE
+              echo $SWP_CADDY_API_CORE_IMAGE
+              echo $SWP_PWA_API_CORE_IMAGE
+              echo $SWP_PHP_API_CORE_IMAGE
+            displayName: "List image tags"
+
+          - script: |
+              cd api_core
+              docker build -f dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_CADDY_API_CORE_IMAGE
+            displayName: "Build Caddy Api Core Image"
+
+          - script: |
+              cd api_core
+              docker build -f dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_PHP_API_CORE_IMAGE
+            displayName: "Build Php Api Core Image"
+
+          - script: |
+              cd api_core
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_CORE_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_PWA_API_CORE_IMAGE
+            displayName: "Build Pwa Api Core Image"
           
-          echo 'Hello world'
+          - script: |
+              cd api_game
+              docker build -f dockerfile --pull --no-cache -t $SWP_CADDY_API_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_CADDY_API_IMAGE
+            displayName: "Build Caddy Api Image"
+
+          - script: |
+              cd api_game
+              docker build -f dockerfile --pull --no-cache -t $SWP_PHP_API_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_PHP_API_IMAGE
+            displayName: "Build Php Api Image"
+
+          - script: |
+              cd api_game
+              docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_IMAGE .
+              docker login $(registry) --username $(heroku_username) --password $(heroku_password)
+              docker push $SWP_PWA_API_IMAGE
+            displayName: "Build Pwa Api Image"
