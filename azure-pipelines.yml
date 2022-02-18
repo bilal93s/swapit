@@ -18,6 +18,7 @@ stages:
         steps:
           - script: |
               echo "Set image tags for v$(build.buildNumber)"
+              heroku login -i && echo "$(heroku_username)" && "$(heroku_password)"
               echo "##vso[task.setvariable variable=SWP_CADDY_API_IMAGE]$(registry)/$(caddy_api):v$(build.buildNumber)"
               echo "##vso[task.setvariable variable=SWP_PHP_API_IMAGE]$(registry)/$(php_api):v$(build.buildNumber)"
               echo "##vso[task.setvariable variable=SWP_PWA_API_IMAGE]$(registry)/$(pwa_api):v$(build.buildNumber)"
