@@ -7,7 +7,7 @@
     <div class="game-list-added">
       <GameCardListOwn v-show="my_games" :games="my_games"/>
       <div class="button-container">
-        <Button class="valider" title="Valider" :onClick="HandleSubmit" />
+        <!-- <Button class="valider" title="Valider" :onClick="HandleSubmit" /> -->
         <Button class="vider" title="vider" :onClick="clearList" />
       </div>
     </div>
@@ -37,10 +37,17 @@
       Button,
       },
       props: {
-         onSubmit: {
+        onSubmit: {
           type: Function,
           require: true,
         },
+        route: {
+          type: String,
+          require: true,
+          validator: (val) => ["own", "wish",].includes(val),
+        }
+
+
       },
       data: () => ({
         searchQuery: null,
@@ -56,6 +63,7 @@
           if (!this.added(game)) {
             console.log( this.$data.my_games);
             this.$data.my_games.push(game)
+            this.HandleSubmit()
           }
         },
         supp: function(game) {
@@ -74,33 +82,48 @@
           console.info(this.$data.my_games)
       },
         HandleSubmit: function() {
-          // this.$emit('submit', this.my_games)
+          if (this.$props.route == "own") {
+            this.updateOwnGames
+          } else {
+            this.updateWishGames
+          }
+        },
+        updateOwnGames(){
+          instance.patch(
+            `/users/${localStorage.getItem('id')}`,
+            {
+              wishGames: this.my_games
+            }
+          )
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        },
+        updateWishGames() {
           instance.patch(`/users/${localStorage.getItem('id')}`,{
-            wishGames: this.my_games
+            ownGames: this.my_games
           }).then(function (response) {
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
           });
-          console.info(this.$data.my_games)
-          console.info('toto')
         },
         resultQuery() {
           console.info(this.$data.searchQuery)
           if (this.searchQuery) {
-             fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
-              // console.info(data[0][])
-            this.$data.resources = data;
-            // fetch(`https://localhost/api/games?name=${this.searchQuery}.json`).then(data => {
-            //   console.info(data)
-            // this.$data.resources = data['hydra:member']
-            
-          }).catch(err => {
-            console.error(err)
-          })
+            fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`)
+            .then(response => response.json())
+            .then(data => {
+                this.$data.resources = data;
+            }).catch(err => {
+              console.error(err)
+            })
           }
-      },
+        },
       },
       provide() {
         return {

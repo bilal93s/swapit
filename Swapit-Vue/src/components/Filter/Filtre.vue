@@ -1,13 +1,22 @@
 <template>
   <div id="Filtre" class="menu-items">
-    <slot>
-      <h1>{{title}}</h1>
-    </slot>
     <Toggle>
-      <li v-for="(value,key) in resource" :key="key" active-class="active" tag="button" exact class="side-btn">
+      <!-- <div class="filter">
+        <h1>{{title}}</h1>
+        <div class="link-container" @change="updateFilter">
+          <li v-for="(option,key) in resource" :key="title+key">
+            <input type="checkbox" :option="option.name" v-model="checkedFilters">
+            <label :class="checked(option)? ' label_checked' : 'label_unchecked'">
+              <h2>
+                {{option.name}}
+              </h2>   
+            </label>
+          </li>
+        </div>
+      </div> -->
+      <li v-for="(value,key) in resource" :key="key" active-class="active" tag="button" exact class="side-btn" :ref="`${title}-${key}`">
         <div class="link-container" @change="UpdateFilter">
-          <input type="checkbox" :id="key" name="scales" :value="value.name" checked="false">
-          <label for="scales" class ="filter_value">{{value.name}}</label>
+          <input type="checkbox" :id="key" name="scales" :value="value.name" v-model="checkedFilters">
         </div>
       </li>
     </Toggle>
@@ -16,131 +25,105 @@
 
 <script>
   import Toggle from "../Toggle/Toggle.vue";
-
   export default {
     name: "Filtre",
       components: {
       Toggle,
     },
     props:{
-      title: String,
-      resource: Array,
-      
+      title: {
+        type: String,
+        require: true
+        },
+      resource: Array, 
     },
-    inject: ['UpdateFilters','filtersSelected'],
+    inject: ['updateFilters'],
     data: () => ({
       searchQuery: null,
       mobile: false,
-      // UpdateFilters: this.UpdateFilters,
-      // filtersSelected: this.filtersSelected,
+      checkedFilters: [],
     }),
     methods: {
-      UpdateFilter: function(e) {
-        var filters = this.filtersSelected
-              console.log(this.$props.title)
-                console.log(this.filtersSelected)
-                this.UpdateFilters(filters);
-              console.log(this.filtersSelected)
-       if(!filters?.[this.$props.title]){
-          filters.push = [this.$props.title] [[e.target.value]]
-        } else if(filters?.[this.$props.title].includes(e.target.value)) {
-                  console.log('test1')
-
-                  console.log(e.target.checked)
-
-         filters[this.$props.title].splice(filters[this.$props.title].indexOf(e.target.value), 1);
-        } else {
-                  console.log(e.target.checked)
-
-          filters[this.$props.title].push(e.target.value);
-        }
-              console.log('test3')
-        this.UpdateFilters(filters);
+      updateFilter: function() {
+        this.updateFilters(this.$data.checkedFilters, this.$props.title);
+      },
+      checked(option) {
+        return this.checkedFilters.includes(option);
       }
+
     },
     
   };
 </script>
 
 <style scoped>
-.title {
-    color: white;
-    font-size: 24px;
-    margin-top: 10px;
+/* body */
+/* title */
+h1{
+  color: #aa8e8d;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 400;
 }
-
-.filter_value {
-    color: black;
-    font-size: 10px;
-    margin-top: 5px;
+/* tasks */
+.filter{
+  width: 300px;
+  height: 405px;
+  position: absolute;
+  top: 20%;
+  left: 0px; 
+  right: 0px;
+  margin: 0px auto;
 }
-
-.menu-items {
-    display: flex;
-    flex-direction: column;
-    margin-left: 6px;
+input[type=checkbox] {
+  /* display: none; */
 }
-
-.menu-items > * {
-    margin-top: 10px;
+.label_unchecked{
+  background: #ae5f75;
+  height: 69px;
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #2C3E50;
+  color: #fff;
+  text-transform: capitalize;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-indent: 20px;
+  cursor: pointer;
+  transition: all 0.7s ease;
+  position: relative;
+  padding: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
-
-.side-btn {
-    border: none;
-    padding: 16px 0px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    color: white;
-    background-color: transparent;
+.label_unchecked h2 {
+  display: block;
+  font-size: 12px;
+  text-transform: capitalize;
+  font-weight: normal;
+  color: #fff;
 }
-
-.side-btn:focus {
-    outline: none;
+.label_unchecked:before{
+  content:"";
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  display: block;
+  position: absolute;
+  border-radius: 100%;
+  right: 20px;
+  top: 30%;
+  transition: border 0.7s ease
 }
-
-.side-btn.active {
-    position: relative;
-    background-color: white;
-    color: teal;
-    font-weight: 600;
-    margin-left: 10px;
-    border-radius: 30px 0 0 30px;
+.label_checked{
+  background: #6d335c;
+  border-bottom: 1px solid #34495E;
+  color: #d37b79;
 }
-
-.side-btn.active::before {
-    top: -30px;
-}
-
-.side-btn.active::after {
-    bottom: -30px;
-}
-
-.side-btn.active::before, .side-btn.active::after {
-    position: absolute;
-    content: "";
-    right: 0;
-    height: 30px;
-    width: 30px;
-    background-color: white;
-}
-
-.side-btn.active .link-container::before {
-    top: -60px;
-}
-
-.side-btn.active .link-container::after {
-    bottom: -60px;
-    z-index: 99;
-}
-
-.side-btn.active .link-container::before, .side-btn.active .link-container::after {
-    position: absolute;
-    content: "";
-    right: 0px;
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    background-color: teal;
+.label_checked ~ label:before
+{
+  background: url("https://i.imgur.com/eoPQ05r.png") no-repeat center center;
 }
 </style>

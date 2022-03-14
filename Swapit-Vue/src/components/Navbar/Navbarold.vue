@@ -1,93 +1,128 @@
 <template>
-    <div class="navbar-ctn">
-        <div class="logo">
-            <img src="../../assets/images/logo.svg" width="60" height="30">
-            <img src="../../assets/images/logo-text.svg" width="60" height="30">
-        </div>
-     <div id="SearchInput">
-        <input class="search-input" v-model="searchQuery" @input="refreshRessource">
-        <div v-if="!home">
-            <div v-show ="searchQuery" v-for="(game,key) in resources" :key="game.name+key">
-                {{game.name}}
+    <div>
+        <div class="navbar-ctn">
+            <div class="flex-logo">
+                <router-link to="/">
+                    <div class="logo">
+                        <img src="../../assets/images/logo.svg" width="60" height="30">
+                        <img src="../../assets/images/logo-text.svg" width="60" height="30">
+                    </div>
+                </router-link>
+                <router-link to="/games" class="nav-link">Games</router-link>
+            </div>
+           
+            <SearchInput @input="updateQuery" :enableSuggestion="!home" @actif="actifSearch = !actifSearch"/>
+            
+            <div class="picto-ctn">
+                <router-link to="/owngameslist"><img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20"></router-link>
+                <router-link to="/wishgameslist"><img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20"></router-link>
+                <router-link to="/subscription"><img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20"></router-link>
+                <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
+                <router-link to="/signup"><img class="picto-nav" src="../../assets/images/id.png" width="35" height="35"></router-link>
+                <button class="logout" @click="logout"><img class="picto-nav" src="../../assets/images/logout.svg" width="20" height="20"></button>
             </div>
         </div>
-    </div>
-    <SideBar v-if="home"/>
-    <div class="picto-ctn">
-        <img class="picto-nav" src="../../assets/images/check.svg" width="25" height="20">
-        <img class="picto-nav" src="../../assets/images/heart.svg" width="20" height="20">
-        <img class="picto-nav" src="../../assets/images/mail.svg" width="20" height="20">
-        <router-link to="/signin"><img class="picto-nav" src="../../assets/images/user.svg" width="20" height="20"></router-link>
-        <router-link to="/signup">Inscription</router-link>
-    </div>
-    <b-container>
+        <SideBar v-if="home && actifSearch "/>
         <div v-if="home">
             <div v-if="resources">
-                        <GameLayer v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
+                <GameLayer v-for="(game,key) in resources" :key="game.id+key" :game="game"/>
             </div>
         </div>
-    </b-container>
     </div>
 </template>
 
 <script>
-    // import SearchInput from "./SearchInput.vue";
+    import SearchInput from "./SearchInput.vue"
     import GameLayer from "../Game/GameLayer.vue";
     import SideBar from "../Filter/SideBar.vue";
-    // import SearchFilter from "../Filter/SearchFilter.vue";
+    // import User from "../../lib/Services/User.js";
     export default {
         components: {
-            // SearchFilter,
             GameLayer,
-            SideBar
+            SideBar,
+            SearchInput
         },
         props: {
             home: {
                 type: Boolean,
+                default: true
             },
         },
     data: () => ({
         searchQuery: null,
         resources: [],
-        updater: null,
-         filtersSelected: 'toto',
+        selectedFilters: [],
+        actifSearch: false,
     }),
     created() {
         if(this.$props.home){
             this.refreshRessource()
+            // var user= new User();
+            // var data = user.getUser(1,['id','name','email','password','created_at','updated_at','deleted_at','role_id','role'])
+            // console.log(data)
+            // data =user.getUser(2)
         }
     },
     methods:{
-         refreshRessource() {
-          if (this.$data.searchQuery) {
-              console.log('toto')
+        logout() {
+            localStorage.clear();
+        },
+        refreshRessource() {
+            if (this.$data.searchQuery) {
+                fetch(`https://localhost/api/games.json?page=1${this.formatedFilters()}&name=${this.searchQuery}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.$data.resources = data;
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+            } else {
+                console.log('toto1')
+                fetch(`https://localhost/api/games.json?popular${this.formatedFilters()}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.$data.resources = data;
+                }).catch(err => {
+                    console.error(err)
+                })          
+            }
+        },
+        formatedFilters() {
+            var filters =''
+            if (this.selectedFilters.length > 0) {   
+                filters = this.$data.selectedFilters.genres ? filters +`${
+                    (
+                        this.$data.selectedFilters.genres
+                        .map((genre, key) => `genres[${key}]=${genre}`)
+                    )
+                    .join('&')}` : ''
+                filters = this.$data.selectedFilters.platforms ? filters +`${
+                    (
+                        this.$data.selectedFilters.platforms
+                        .map((platform, key) => `platforms[${key}]=${platform}`)
+                    ).join('&')}` : ''
 
-
-             fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}`).then(response => response.json()).then(data => {
-            this.$data.resources = data;
-            
-            }).catch(err => {
-                console.error(err)
-            })
-        } else {
-             console.log('toto1')
-            fetch(`https://localhost/api/games.json?popular`).then(response => response.json()).then(data => {
-            this.$data.resources = data;
-        
-            }).catch(err => {
-                console.error(err)
-            })          
-        }
-      },
-        UpdateFilters(filters) {
-            this.$data.filtersSelected = filters;
+                filters = this.$data.selectedFilters.modes ? filters +`${
+                    (this.$data.selectedFilters.modes
+                    .map((mode, key) => `modes[${key}]=${mode}`)
+                    ).join('&')}` : ''
+            }
+            return filters
+        }, 
+        updateFilters(filters, categorie) {
+            this.$data.selectedFilters[categorie] = filters;
+            this.refreshRessource()
             console.log(this.$data.filtersSelected)
-      },
+        },
+        updateQuery(value) {
+            this.$data.searchQuery = value
+            this.refreshRessource()
+        }
     },
      provide() {
         return {
-        UpdateFilters: this.UpdateFilters,
-        filtersSelected: this.filtersSelected,
+            updateFilters: this.updateFilters,
         }
   },
     

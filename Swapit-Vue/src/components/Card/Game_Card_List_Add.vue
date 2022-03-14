@@ -22,6 +22,9 @@ export default {
     games: {
       type: Array,
     },
+    onSubmit: {
+      type: Function
+    }
   },
   inject: ['add', 'added'],
   data() {

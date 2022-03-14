@@ -15,7 +15,11 @@
       <GameCardExchange v-if="gameWishSelected || gameToExchangeSelected" :gameToExchange="gameToExchangeSelected" :gameWish="gameWishSelected"/>
     </div>
     <Button class="btn-swap" title="Swaper" :onClick="HandleSubmit" />
+    <div>
+      <p>{{ tweened.number.toFixed(0) }}</p>
+    </div>
   </div>
+  
 </template>
 
 <script>

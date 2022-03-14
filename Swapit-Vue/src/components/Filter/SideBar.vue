@@ -13,11 +13,6 @@ import SearchFilter from "./SearchFilter.vue";
     components: {
     SearchFilter
     },
-//  provide() {
-//         return {
-//         filtersSelected: this.filtersSelected,
-//         UpdateFilters: this.UpdateFilters,
-//         }}
 }
 </script>
 

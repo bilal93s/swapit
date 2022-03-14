@@ -1,5 +1,5 @@
 <template>
-  <component v-bind:is="as" aria-busy="" class="button,btn-10" v-on:click="onClick">
+  <component v-bind:is="as" aria-busy="" class="btn btn-one" v-on:click="onClick">
     <span>{{ title }}</span>
   </component>
 </template>
@@ -27,47 +27,58 @@ export default {
 
 <style scoped>
 
-.button {
-  margin: 20px;
-  outline: none;
-}
-.custom-btn {
-  width: 130px;
-  height: 40px;
-  padding: 10px 25px;
-  border: 2px solid #000;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  background: transparent;
+.btn {
+  /* line-height: 50px; */
+  height: 50px;
+  text-align: center;
+  width: 250px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  color: #FF5D19;
+  transition: all 0.3s;
   position: relative;
-  display: inline-block;
 }
-
-.btn-10 {
-  transition: all 0.3s ease;
-  overflow: hidden;
+.btn span {
+  transition: all 0.3s;
 }
-.btn-10:after {
+.btn::before {
+  content: '';
   position: absolute;
-  content: " ";
-  top: 0;
+  bottom: 0;
   left: 0;
-  z-index: -1;
   width: 100%;
   height: 100%;
-  transition: all 0.3s ease;
-  -webkit-transform: scale(.1);
-  transform: scale(.1);
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgba(216, 50, 50, 0.5);
+  border-bottom-color: rgba(199, 71, 71, 0.5);
+  transform: scale(0.1, 1);
 }
-.btn-10:hover {
-  color: #fff;
+.btn:hover span {
+  letter-spacing: 2px;
 }
-.btn-10:hover:after {
-  background: #000;
-  -webkit-transform: scale(1);
-  transform: scale(1);
+.btn:hover::before {
+  opacity: 1; 
+  transform: scale(1, 1); 
 }
-
+.btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.3s;
+  background-color:white;
+  opacity: 0.5;
+}
+.btn:hover::after {
+  opacity: 0; 
+  transform: scale(0.1, 1);
+}
 </style>

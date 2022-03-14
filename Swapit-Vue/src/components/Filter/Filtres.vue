@@ -11,51 +11,51 @@
   export default {
     components: {
       Filtre,
-      // Toggle
     },
     name: "Filtres",
-    // props:{
-    //   filtres_data: Object
-    // },
     data: () => ({
       searchQuery: null,
       filters: {
         genres: [],
         platforms: [],
         modes: [],
-    },
-    
+      },
       mobile: false,
     }),
     async created () {
-
-      fetch("https://localhost/api/genres.json?properties%5B%5D=name").then(response => response.json()).then(data => {
-            // console.info(data.members)
-         this.$data.filters.genres = data;
-          
+      this.generateCategories()
+    },
+    methods:{
+      //fetch and initialise filters
+      generateCategories() {
+        fetch("https://localhost/api/genres.json?properties%5B%5D=name&properties%5B%5D=id")
+        .then(response => response.json())
+        .then(data => {
+          this.$data.filters.genres = data;
+          console.log(this.$data.filters.genres)
         }).catch(err => {
           console.error(err)
         })
-        fetch("https://localhost/api/platforms.json?properties%5B%5D=name").then(response => response.json()).then(data => {
-            console.info(data)
+        fetch("https://localhost/api/platforms.json?properties%5B%5D=name&properties%5B%5D=id")
+        .then(response => response.json())
+        .then(data => {
+          
           this.$data.filters.platforms= data;
+          console.log(this.$data.filters.platforms)
           
         }).catch(err => {
           console.error(err)
         })
-          fetch("https://localhost/api/modes.json?properties%5B%5D=name").then(response => response.json()).then(data => {
-            console.info(data)
+          fetch("https://localhost/api/modes.json?properties%5B%5D=name&properties%5B%5D=id")
+          .then(response => response.json())
+          .then(data => {
             this.$data.filters.modes = data;
-          
+            console.log(this.$data.filters.modes)
         }).catch(err => {
           console.error(err)
         }) 
-  },
-  provide() {
-        return {
-        filtersSelected: this.filtersSelected,
-        UpdateFilters: this.UpdateFilters,
-        }}
+      },
+    }
   };
 </script>
 

@@ -1,25 +1,25 @@
 <template>
   <div class="">
     <main class="form-signin">
-      <Formik :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true">
-        <h1 class="h3 mb-3 fw-normal">Connexion</h1>
-
-        <div class="form-floating">
-          <Field type="email" class="form-control" id="floatingInput email" placeholder="name@example.com" name="email" :with_label="with_label" :error="errors.email"/>
-          <small v-if="errors.email"> {{errors.email}} </small>
-          <label for="floatingInput">Adresse email</label>
+      <Formik title="Connexion" :onSubmit="onSubmit" :validator="validator" v-slot="{handleSubmit, errors, with_label}" :with_label="true" description="Connecter vous à votre compte Swapit">
+        <div>
+          <Field type="email" name="email"  placeholder="name@example.com" :with_label="with_label" :error="errors.email"/>
+          <!-- <small v-if="errors.email"> {{errors.email}} </small> -->
+          <Error v-if="errors.email" :value="errors.email"/>
         </div>
-        <div class="form-floating">
-          <Field class="form-control" id='password floatingPassword' name="password" type="password" :with_label="with_label" placeholder="toto" :error="errors.password"/>
-          <label for="floatingPassword">Mot de passe</label>
+        <div>
+          <div>
+            <Field type="password" name="password"  :with_label="with_label" placeholder="toto" :error="errors.password"/>
+            <Error  v-if="errors.password" :value="errors.password"/>
+            <!-- <small v-if="errors.password"> {{errors.password}} </small> -->
+          </div>
         </div>
-        
         <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me"> Se souvenir de moi
           </label>
         </div>
-        <Button :onClick='handleSubmit' title="Connexion" type="submit" class="w-50 btn btn-lg btn-primary">Connexion</Button>
+        <Button :onClick='handleSubmit' title="Connexion" type="submit">Connexion</Button>
       </Formik>
     </main>
   </div>
@@ -31,18 +31,15 @@
   import { SigninSchema as validator } from "../../lib/Validators/Signin_validator.js";
   import Formik from "../../lib/Formik.vue";
   import Field from "../../lib/Field.vue";
+  import Error from "../Errors/Error.vue";
   import axios from 'axios';
   export default {
     components: {
       Formik,
       Field,
       Button,
+      Error
     },
-    // data: function () {  
-    //   return {
-    //     connexion_failed: false
-    //   }
-    // },
     computed:{
       validator:()=>validator,
     },
