@@ -37,7 +37,7 @@ stages:
             displayName: "List image tags"
 
           - script: |
-              cd api_core
+              cd api_core/api
               ls -al
               docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_CORE_IMAGE --target api_platform_caddy .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
@@ -46,35 +46,35 @@ stages:
             displayName: "Build Caddy Api Core Image"
 
           - script: |
-              cd api_core
+              cd api_core/api
               docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_CORE_IMAGE --target api_platform_php .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PHP_API_CORE_IMAGE
             displayName: "Build Php Api Core Image"
 
           - script: |
-              cd api_core
+              cd api_core/api
               docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_CORE_IMAGE --target api_platform_pwa_prod .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PWA_API_CORE_IMAGE
             displayName: "Build Pwa Api Core Image"
           
           - script: |
-              cd api_game
+              cd api_game/api
               docker build -f Dockerfile --pull --no-cache -t $SWP_CADDY_API_IMAGE --target api_platform_caddy .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_CADDY_API_IMAGE
             displayName: "Build Caddy Api Image"
 
           - script: |
-              cd api_game
+              cd api_game/api
               docker build -f Dockerfile --pull --no-cache -t $SWP_PHP_API_IMAGE --target api_platform_php .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PHP_API_IMAGE
             displayName: "Build Php Api Image"
 
           - script: |
-              cd api_game
+              cd api_game/api
               docker build -f Dockerfile --pull --no-cache -t $SWP_PWA_API_IMAGE --target api_platform_pwa_prod .
               docker login $(registry) --username $(heroku_username) --password $(heroku_password)
               docker push $SWP_PWA_API_IMAGE
