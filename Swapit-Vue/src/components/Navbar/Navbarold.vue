@@ -69,7 +69,7 @@
         },
         refreshRessource() {
             if (this.$data.searchQuery) {
-                fetch(`https://localhost/api/games.json?page=1${this.formatedFilters()}&name=${this.searchQuery}`)
+                fetch(`https://localhost/api/games.json?page=1&name=${this.searchQuery}&${this.formatedFilters()}`)
                 .then(response => response.json())
                 .then(data => {
                     this.$data.resources = data;
@@ -79,7 +79,7 @@
                 })
             } else {
                 console.log('toto1')
-                fetch(`https://localhost/api/games.json?popular${this.formatedFilters()}`)
+                fetch(`https://localhost/api/games.json?popular&${this.formatedFilters()}`)
                 .then(response => response.json())
                 .then(data => {
                     this.$data.resources = data;
@@ -90,30 +90,54 @@
         },
         formatedFilters() {
             var filters =''
-            if (this.selectedFilters.length > 0) {   
-                filters = this.$data.selectedFilters.genres ? filters +`${
+            if (!this.checkEmptySelectedFilter()) {   
+                if(!this.checkEmptySelectedFilter('genres')){
+                filters = this.$data.selectedFilters.genres ? (filters != '' ? filters+"&" : filters) +`${
                     (
-                        this.$data.selectedFilters.genres
-                        .map((genre, key) => `genres[${key}]=${genre}`)
+                        this.$data.selectedFilters.genres.map((genre, key) => `genres[${key}]=${genre}`)
                     )
-                    .join('&')}` : ''
-                filters = this.$data.selectedFilters.platforms ? filters +`${
+                    .join('&')}` : filters
+                       console.log(filters)
+                }
+                if(!this.checkEmptySelectedFilter('platforms')){
+                filters = this.$data.selectedFilters.platforms ? (filters != '' ? filters+"&" : filters) +`${
                     (
-                        this.$data.selectedFilters.platforms
-                        .map((platform, key) => `platforms[${key}]=${platform}`)
-                    ).join('&')}` : ''
-
-                filters = this.$data.selectedFilters.modes ? filters +`${
-                    (this.$data.selectedFilters.modes
-                    .map((mode, key) => `modes[${key}]=${mode}`)
-                    ).join('&')}` : ''
+                        this.$data.selectedFilters.platforms.map((platform, key) => `platforms[${key}]=${platform}`)
+                    ).join('&')}` : filters
+                       console.log(filters)
+                }
+                if(!this.checkEmptySelectedFilter('modes')){
+                filters = this.$data.selectedFilters.modes ? (filters != '' ? filters+"&" : filters) +`${
+                    (this.$data.selectedFilters.modes.map((mode, key) => `modes[${key}]=${mode}`)
+                    ).join('&')}` : filters
+                     console.log(filters)
+                }
+                console.log(filters)
             }
+            console.log(filters)
             return filters
         }, 
         updateFilters(filters, categorie) {
             this.$data.selectedFilters[categorie] = filters;
+            if (this.checkEmptySelectedFilter(categorie)) {
+                delete  this.$data.selectedFilters[categorie]
+            }
             this.refreshRessource()
-            console.log(this.$data.filtersSelected)
+            console.log(this.$data.selectedFilters)
+        },
+        checkEmptySelectedFilter(categorie = null) {
+
+            if (categorie) {
+                console.log(this.$data.selectedFilters?.[categorie])
+                console.log(this.$data.selectedFilters?.[categorie]?.length)
+                // if(this.$data.selectedFilters?.[categorie]){
+                    return this.$data.selectedFilters?.[categorie]?.length === 0 
+                // }
+              
+            } else if (!this.$data.selectedFilters) {
+                return true
+            }
+            
         },
         updateQuery(value) {
             this.$data.searchQuery = value
