@@ -4,6 +4,7 @@
 
 trigger:
 - main
+- sub_main
 
 resources:
 - repo: self
